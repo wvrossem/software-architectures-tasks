@@ -38,6 +38,7 @@ import org.eclipse.gef.examples.shapes.model.ModelElement;
 import org.eclipse.gef.examples.shapes.model.RectangularShape;
 import org.eclipse.gef.examples.shapes.model.Shape;
 import org.eclipse.gef.examples.shapes.model.ShapesDiagram;
+import org.eclipse.gef.examples.shapes.model.TriangularShape;
 import org.eclipse.gef.examples.shapes.model.commands.ShapeCreateCommand;
 import org.eclipse.gef.examples.shapes.model.commands.ShapeSetConstraintCommand;
 
@@ -162,7 +163,9 @@ private static class ShapesXYLayoutEditPolicy extends XYLayoutEditPolicy {
 	 */
 	protected Command getCreateCommand(CreateRequest request) {
 		Object childClass = request.getNewObjectType();
-		if (childClass == EllipticalShape.class || childClass == RectangularShape.class) {
+		// MODIFIED
+		// Also need to return a create command for the new shape.
+		if (childClass == EllipticalShape.class || childClass == RectangularShape.class || childClass == TriangularShape.class) {
 			// return a command that can add a Shape to a ShapesDiagram 
 			return new ShapeCreateCommand((Shape)request.getNewObject(), 
 					(ShapesDiagram)getHost().getModel(), (Rectangle)getConstraintFor(request));

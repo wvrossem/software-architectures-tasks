@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2004, 2008 Elias Volanakis and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Elias Volanakis - initial API and implementation
- *******************************************************************************/
+ï¿½* All rights reserved. This program and the accompanying materials
+ï¿½* are made available under the terms of the Eclipse Public License v1.0
+ï¿½* which accompanies this distribution, and is available at
+ï¿½* http://www.eclipse.org/legal/epl-v10.html
+ï¿½*
+ï¿½* Contributors:
+ï¿½*ï¿½ï¿½ï¿½ï¿½Elias Volanakis - initial API and implementation
+ï¿½*******************************************************************************/
 package org.eclipse.gef.examples.shapes;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -29,6 +29,7 @@ import org.eclipse.gef.requests.SimpleFactory;
 import org.eclipse.gef.examples.shapes.model.Connection;
 import org.eclipse.gef.examples.shapes.model.EllipticalShape;
 import org.eclipse.gef.examples.shapes.model.RectangularShape;
+import org.eclipse.gef.examples.shapes.model.TriangularShape;
 
 /**
  * Utility class that can create a GEF Palette.
@@ -64,6 +65,18 @@ private static PaletteContainer createShapesDrawer() {
 			new SimpleFactory(RectangularShape.class), 
 			ImageDescriptor.createFromFile(ShapesPlugin.class, "icons/rectangle16.gif"), 
 			ImageDescriptor.createFromFile(ShapesPlugin.class, "icons/rectangle24.gif"));
+	componentsDrawer.add(component);
+	
+	// MODIFIED
+	// Add a item to the palette window for the new shape.
+	component = new CombinedTemplateCreationEntry(
+			"Triangle",
+			"Create a triangular shape", 
+			TriangularShape.class,
+			new SimpleFactory(TriangularShape.class), 
+			// @todo Create icons
+			ImageDescriptor.createFromFile(ShapesPlugin.class, "icons/triangle16.gif"), 
+			ImageDescriptor.createFromFile(ShapesPlugin.class, "icons/triangle24.gif"));
 	componentsDrawer.add(component);
 
 	return componentsDrawer;
