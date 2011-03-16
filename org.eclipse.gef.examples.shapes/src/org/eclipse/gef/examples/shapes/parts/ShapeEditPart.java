@@ -230,7 +230,8 @@ public ConnectionAnchor getTargetConnectionAnchor(Request request) {
  */
 public void propertyChange(PropertyChangeEvent evt) {
 	String prop = evt.getPropertyName();
-	if (Shape.SIZE_PROP.equals(prop) || Shape.LOCATION_PROP.equals(prop)) {
+	// MODIFIED
+	if (Shape.SIZE_PROP.equals(prop) || Shape.LOCATION_PROP.equals(prop) || Shape.COLOR_PROP.equals(prop)) {
 		refreshVisuals();
 	} else if (Shape.SOURCE_CONNECTIONS_PROP.equals(prop)) {
 		refreshSourceConnections();

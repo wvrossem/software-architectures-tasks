@@ -15,7 +15,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
 
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -64,6 +66,18 @@ private static final String XPOS_PROP = "Shape.xPos";
 /** ID for the Y property value (used for by the corresponding property descriptor).  */
 private static final String YPOS_PROP = "Shape.yPos";
 
+// MODIFIED
+/** Property ID to use when the color of this shape is modified. */
+public static final String COLOR_PROP = "Shape.Color";
+
+// MODiFIED
+/** ID for the red color property value (used for by the corresponding property descriptor).  */
+private static final String RCOLOR_PROP = "Shape.rColor";
+/** ID for the green color property value (used for by the corresponding property descriptor).  */
+private static final String GCOLOR_PROP = "Shape.gColor";
+/** ID for the blue color property value (used for by the corresponding property descriptor).  */
+private static final String BCOLOR_PROP = "Shape.bColor";
+
 /*
  * Initializes the property descriptors array.
  * @see #getPropertyDescriptors()
@@ -76,6 +90,10 @@ static {
 			new TextPropertyDescriptor(YPOS_PROP, "Y"),
 			new TextPropertyDescriptor(WIDTH_PROP, "Width"),
 			new TextPropertyDescriptor(HEIGHT_PROP, "Height"),
+			// MODIFIED
+			new TextPropertyDescriptor(RCOLOR_PROP, "Color - Red"),
+			new TextPropertyDescriptor(GCOLOR_PROP, "Color - Green"),
+			new TextPropertyDescriptor(BCOLOR_PROP, "Color - Blue"),
 	};
 	// use a custom cell editor validator for all four array entries
 	for (int i = 0; i < descriptors.length; i++) {
@@ -111,6 +129,9 @@ private Dimension size = new Dimension(50, 50);
 private List sourceConnections = new ArrayList();
 /** List of incoming Connections. */
 private List targetConnections = new ArrayList();
+// MODIFIED
+/** The color of this shape. */
+private RGB color = new RGB(0, 0, 0);
 
 /**
  * Add an incoming or outgoing connection to this shape.
@@ -177,6 +198,16 @@ public Object getPropertyValue(Object propertyId) {
 	if (WIDTH_PROP.equals(propertyId)) {
 		return Integer.toString(size.width);
 	}
+	// MODIFIED
+	if (RCOLOR_PROP.equals(propertyId)) {
+		return Integer.toString(color.red);
+	}
+	if (GCOLOR_PROP.equals(propertyId)) {
+		return Integer.toString(color.green);
+	}
+	if (BCOLOR_PROP.equals(propertyId)) {
+		return Integer.toString(color.blue);
+	}
 	return super.getPropertyValue(propertyId);
 }
 
@@ -186,6 +217,15 @@ public Object getPropertyValue(Object propertyId) {
  */
 public Dimension getSize() {
 	return size.getCopy();
+}
+
+// MODIFIED
+/**
+ * Return the Color of this shape.
+ * @return a non-null Dimension instance
+ */
+public RGB getColor() {
+	return color;
 }
 
 /**
@@ -254,9 +294,28 @@ public void setPropertyValue(Object propertyId, Object value) {
 	} else if (WIDTH_PROP.equals(propertyId)) {
 		int width = Integer.parseInt((String) value);
 		setSize(new Dimension(width, size.height));
+	// MODIFIED
+	} else if (RCOLOR_PROP.equals(propertyId)) {
+		int red = Integer.parseInt((String) value);
+		setColor(new RGB(red, color.green, color.blue));
+	} else if (GCOLOR_PROP.equals(propertyId)) {
+		int green = Integer.parseInt((String) value);
+		setColor(new RGB(color.red, green, color.blue));
+	} else if (BCOLOR_PROP.equals(propertyId)) {
+		int blue = Integer.parseInt((String) value);
+		setColor(new RGB(color.red, color.green, blue));
 	} else {
 		super.setPropertyValue(propertyId, value);
 	}
+}
+
+// MODIFIED
+private void setColor(RGB newColor) {
+	if (newColor != null) {
+		color = newColor;
+		firePropertyChange(COLOR_PROP, null, newColor);
+	}
+	
 }
 
 /**
