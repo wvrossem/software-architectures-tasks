@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Elias Volanakis - initial API and implementation
+ *ï¿½ï¿½ï¿½ï¿½Elias Volanakis - initial API and implementation
  *******************************************************************************/
 package org.eclipse.gef.examples.shapes.parts;
 
@@ -21,6 +21,7 @@ import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.EllipseAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.Triangle;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 import org.eclipse.gef.ConnectionEditPart;
@@ -39,6 +40,7 @@ import org.eclipse.gef.examples.shapes.model.EllipticalShape;
 import org.eclipse.gef.examples.shapes.model.ModelElement;
 import org.eclipse.gef.examples.shapes.model.RectangularShape;
 import org.eclipse.gef.examples.shapes.model.Shape;
+import org.eclipse.gef.examples.shapes.model.TriangularShape;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionCreateCommand;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionReconnectCommand;
 
@@ -136,6 +138,9 @@ private IFigure createFigureForModel() {
 		return new Ellipse();
 	} else if (getModel() instanceof RectangularShape) {
 		return new RectangleFigure();
+	// MODIFIED
+	} else if (getModel() instanceof TriangularShape) {
+		return new Triangle();
 	} else {
 		// if Shapes gets extended the conditions above must be updated
 		throw new IllegalArgumentException();
@@ -161,6 +166,9 @@ protected ConnectionAnchor getConnectionAnchor() {
 		if (getModel() instanceof EllipticalShape)
 			anchor = new EllipseAnchor(getFigure());
 		else if (getModel() instanceof RectangularShape)
+			anchor = new ChopboxAnchor(getFigure());
+		// Modified
+		else if (getModel() instanceof TriangularShape)
 			anchor = new ChopboxAnchor(getFigure());
 		else
 			// if Shapes gets extended the conditions above must be updated
