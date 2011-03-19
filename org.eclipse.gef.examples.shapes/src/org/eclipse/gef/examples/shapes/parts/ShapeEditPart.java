@@ -43,6 +43,7 @@ import org.eclipse.gef.examples.shapes.model.Shape;
 import org.eclipse.gef.examples.shapes.model.TriangularShape;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionCreateCommand;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionReconnectCommand;
+import org.eclipse.swt.graphics.Color;
 
 /**
  * EditPart used for Shape instances (more specific for EllipticalShape and
@@ -125,7 +126,7 @@ protected void createEditPolicies() {
 protected IFigure createFigure() {
 	IFigure f = createFigureForModel();
 	f.setOpaque(true); // non-transparent figure
-	f.setBackgroundColor(ColorConstants.green);
+	f.setBackgroundColor(new Color(null, Shape.defaultColor));
 	return f;
 }
 
@@ -248,5 +249,7 @@ protected void refreshVisuals() {
 	Rectangle bounds = new Rectangle(getCastedModel().getLocation(),
 			getCastedModel().getSize());
 	((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(), bounds);
+	// MODIFIED
+	getFigure().setBackgroundColor(new Color(null,getCastedModel().getColor()));
 }
 }
