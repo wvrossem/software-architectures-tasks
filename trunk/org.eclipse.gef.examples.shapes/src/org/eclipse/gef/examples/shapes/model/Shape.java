@@ -300,12 +300,18 @@ public void setPropertyValue(Object propertyId, Object value) {
 	// MODIFIED
 	} else if (RCOLOR_PROP.equals(propertyId)) {
 		int red = Integer.parseInt((String) value);
+		red = red > 255 ? 255 : red;
+		red = red < 0 ? 0 : red;
 		setColor(new RGB(red, color.green, color.blue));
 	} else if (GCOLOR_PROP.equals(propertyId)) {
 		int green = Integer.parseInt((String) value);
+		green = green > 255 ? 255 : green;
+		green = green < 0 ? 0 : green;
 		setColor(new RGB(color.red, green, color.blue));
 	} else if (BCOLOR_PROP.equals(propertyId)) {
 		int blue = Integer.parseInt((String) value);
+		blue = blue > 255 ? 255 : blue;
+		blue = blue < 0 ? 0 : blue;
 		setColor(new RGB(color.red, color.green, blue));
 	} else {
 		super.setPropertyValue(propertyId, value);
@@ -319,6 +325,33 @@ public void setColor(RGB newColor) {
 		firePropertyChange(COLOR_PROP, null, newColor);
 	}
 	
+}
+
+// MODIFIED
+public void addColor(RGB addColor) {
+	int red = color.red;
+	int green = color.green;
+	int blue = color.blue;
+	
+	if ((red + addColor.red) > 255) {
+		red = 255;
+	} else {
+		red += addColor.red;
+	}
+	
+	if ((green + addColor.green) > 255) {
+		green = 255;
+	} else {
+		green += addColor.green;
+	}
+	
+	if ((blue + addColor.blue) > 255) {
+		blue = 255;
+	} else {
+		blue += addColor.blue;
+	}
+	
+	color = new RGB(red, green, blue);
 }
 
 /**

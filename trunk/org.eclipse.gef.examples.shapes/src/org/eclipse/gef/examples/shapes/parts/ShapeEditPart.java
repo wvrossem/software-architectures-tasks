@@ -12,6 +12,7 @@ package org.eclipse.gef.examples.shapes.parts;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.ref.Reference;
 import java.util.List;
 
 import org.eclipse.draw2d.ChopboxAnchor;
@@ -44,6 +45,7 @@ import org.eclipse.gef.examples.shapes.model.TriangularShape;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionCreateCommand;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionReconnectCommand;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 
 /**
  * EditPart used for Shape instances (more specific for EllipticalShape and
@@ -231,14 +233,21 @@ public ConnectionAnchor getTargetConnectionAnchor(Request request) {
  */
 public void propertyChange(PropertyChangeEvent evt) {
 	String prop = evt.getPropertyName();
-	// MODIFIED
-	if (Shape.SIZE_PROP.equals(prop) || Shape.LOCATION_PROP.equals(prop) || Shape.COLOR_PROP.equals(prop)) {
+	if (Shape.SIZE_PROP.equals(prop) || Shape.LOCATION_PROP.equals(prop)) {
 		refreshVisuals();
+	// MODIFIED
+	} else if (Shape.COLOR_PROP.equals(prop)) {
+		refreshColor();
 	} else if (Shape.SOURCE_CONNECTIONS_PROP.equals(prop)) {
 		refreshSourceConnections();
-	} else if (Shape.TARGET_CONNECTIONS_PROP.equals(prop)) {
+	} else if (Shape.TARGET_CONNECTIONS_PROP.equals(prop)) {		
 		refreshTargetConnections();
 	}
+}
+
+// MODIFIED
+protected void refreshColor() {
+	getFigure().setBackgroundColor(new Color(null,getCastedModel().getColor()));
 }
 
 protected void refreshVisuals() {
@@ -248,8 +257,9 @@ protected void refreshVisuals() {
 	// and will not draw it correctly.
 	Rectangle bounds = new Rectangle(getCastedModel().getLocation(),
 			getCastedModel().getSize());
-	((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(), bounds);
-	// MODIFIED
-	getFigure().setBackgroundColor(new Color(null,getCastedModel().getColor()));
+	((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(), bounds);	
+	
+	// @todo Remove this here, only used to see effect of color change when creating a connection
+	refreshColor();
 }
 }

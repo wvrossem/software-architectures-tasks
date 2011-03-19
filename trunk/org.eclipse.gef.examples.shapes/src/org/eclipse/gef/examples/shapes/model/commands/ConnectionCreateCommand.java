@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2004, 2005 Elias Volanakis and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Elias Volanakis - initial API and implementation
- *******************************************************************************/
+ï¿½* All rights reserved. This program and the accompanying materials
+ï¿½* are made available under the terms of the Eclipse Public License v1.0
+ï¿½* which accompanies this distribution, and is available at
+ï¿½* http://www.eclipse.org/legal/epl-v10.html
+ï¿½*
+ï¿½* Contributors:
+ï¿½*ï¿½ï¿½ï¿½ï¿½Elias Volanakis - initial API and implementation
+ï¿½*******************************************************************************/
 package org.eclipse.gef.examples.shapes.model.commands;
 
 import java.util.Iterator;
@@ -16,6 +16,7 @@ import org.eclipse.gef.commands.Command;
 
 import org.eclipse.gef.examples.shapes.model.Connection;
 import org.eclipse.gef.examples.shapes.model.Shape;
+import org.eclipse.swt.graphics.RGB;
 
 
 /**
@@ -48,6 +49,9 @@ private final int lineStyle;
 private final Shape source;
 /** Target endpoint for the connection. */
 private Shape target;
+
+// MODIFIED
+private RGB oldTargetColor;
 
 /**
  *	Instantiate a command that can create a connection between two shapes.
@@ -91,13 +95,22 @@ public void execute() {
 	connection = new Connection(source, target);
 	// use the supplied line style
 	connection.setLineStyle(lineStyle);
+	
+	//MODIFIED
+	oldTargetColor = target.getColor();
+	RGB sourceColor = source.getColor();
+	
+	// MODIFIED
+	target.addColor(sourceColor);
 }
 
 /* (non-Javadoc)
  * @see org.eclipse.gef.commands.Command#redo()
  */
 public void redo() {
-	connection.reconnect();
+	// MODIFIED
+	// connection.reconnect();
+	execute();
 }
 
 /**
@@ -117,5 +130,7 @@ public void setTarget(Shape target) {
  */
 public void undo() {
 	connection.disconnect();
+	// MODIFIED
+	target.setColor(oldTargetColor);
 }
 }
