@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2004, 2005 Elias Volanakis and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Elias Volanakis - initial API and implementation
- *******************************************************************************/
+ï¿½* All rights reserved. This program and the accompanying materials
+ï¿½* are made available under the terms of the Eclipse Public License v1.0
+ï¿½* which accompanies this distribution, and is available at
+ï¿½* http://www.eclipse.org/legal/epl-v10.html
+ï¿½*
+ï¿½* Contributors:
+ï¿½*ï¿½ï¿½ï¿½ï¿½Elias Volanakis - initial API and implementation
+ï¿½*******************************************************************************/
 package org.eclipse.gef.examples.shapes.model;
 
 import java.io.IOException;
@@ -78,6 +78,9 @@ private static final String GCOLOR_PROP = "Shape.gColor";
 /** ID for the blue color property value (used for by the corresponding property descriptor).  */
 private static final String BCOLOR_PROP = "Shape.bColor";
 
+//MODIFIED
+public static final RGB defaultColor = new RGB(0,0,0);
+
 /*
  * Initializes the property descriptors array.
  * @see #getPropertyDescriptors()
@@ -131,7 +134,7 @@ private List sourceConnections = new ArrayList();
 private List targetConnections = new ArrayList();
 // MODIFIED
 /** The color of this shape. */
-private RGB color = new RGB(0, 0, 0);
+private RGB color = defaultColor;
 
 /**
  * Add an incoming or outgoing connection to this shape.
@@ -310,7 +313,7 @@ public void setPropertyValue(Object propertyId, Object value) {
 }
 
 // MODIFIED
-private void setColor(RGB newColor) {
+public void setColor(RGB newColor) {
 	if (newColor != null) {
 		color = newColor;
 		firePropertyChange(COLOR_PROP, null, newColor);
