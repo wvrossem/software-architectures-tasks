@@ -38,19 +38,22 @@ public class ShapeSetColorCommand extends Command {
 	@Override
 	public void execute() {
 		oldColor = new RGB(shape.getColor().red, shape.getColor().green, shape.getColor().blue);
-		redo();
+		shape.setColor(newColor);
+		//redo();
 	}
 	
 	@Override
 	public void redo() {
+		shape.setColor(newColor);
 		// TODO Auto-generated method stub
-		super.redo();
+		//super.redo();
 	}
 
 	@Override
 	public void undo() {
+		shape.setColor(oldColor);
 		// TODO Auto-generated method stub
-		super.undo();
+		//super.undo();
 	}
 
 }

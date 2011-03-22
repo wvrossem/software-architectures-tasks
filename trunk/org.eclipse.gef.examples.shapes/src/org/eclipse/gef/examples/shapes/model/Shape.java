@@ -78,8 +78,11 @@ private static final String GCOLOR_PROP = "Shape.gColor";
 /** ID for the blue color property value (used for by the corresponding property descriptor).  */
 private static final String BCOLOR_PROP = "Shape.bColor";
 
-//MODIFIED
-public static final RGB defaultColor = new RGB(0,0,0);
+// MODIFIED by Ken & Wouter
+private static RGB defaultColor = new RGB(100, 100, 100);
+//public static RGB getDefaultColor() {
+//	return new RGB(100, 100, 100);
+//}
 
 /*
  * Initializes the property descriptors array.
@@ -134,7 +137,7 @@ private List sourceConnections = new ArrayList();
 private List targetConnections = new ArrayList();
 // MODIFIED
 /** The color of this shape. */
-private RGB color = defaultColor;
+protected RGB color = defaultColor;
 
 /**
  * Add an incoming or outgoing connection to this shape.
@@ -322,36 +325,39 @@ public void setPropertyValue(Object propertyId, Object value) {
 public void setColor(RGB newColor) {
 	if (newColor != null) {
 		color = newColor;
-		firePropertyChange(COLOR_PROP, null, newColor);
+		firePropertyChange(COLOR_PROP, null, color);
 	}
 	
 }
 
-// MODIFIED
+// MODIFIED by Ken & Wouter
 public void addColor(RGB addColor) {
-	int red = color.red;
-	int green = color.green;
-	int blue = color.blue;
-	
-	if ((red + addColor.red) > 255) {
-		red = 255;
-	} else {
-		red += addColor.red;
+	if (addColor != null) {
+		int red = color.red;
+		int green = color.green;
+		int blue = color.blue;
+		
+		if ((red + addColor.red) > 255) {
+			red = 255;
+		} else {
+			red += addColor.red;
+		}
+		
+		if ((green + addColor.green) > 255) {
+			green = 255;
+		} else {
+			green += addColor.green;
+		}
+		
+		if ((blue + addColor.blue) > 255) {
+			blue = 255;
+		} else {
+			blue += addColor.blue;
+		}
+		
+		color = new RGB(red, green, blue);
+		firePropertyChange(COLOR_PROP, null, color);
 	}
-	
-	if ((green + addColor.green) > 255) {
-		green = 255;
-	} else {
-		green += addColor.green;
-	}
-	
-	if ((blue + addColor.blue) > 255) {
-		blue = 255;
-	} else {
-		blue += addColor.blue;
-	}
-	
-	color = new RGB(red, green, blue);
 }
 
 /**
