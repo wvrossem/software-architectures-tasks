@@ -121,14 +121,16 @@ protected void createEditPolicies() {
 		}
 	});
 }
-	
+
+// MODIFIED by Ken & Wouter
 /*(non-Javadoc)
  * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#createFigure()
  */
 protected IFigure createFigure() {
 	IFigure f = createFigureForModel();
 	f.setOpaque(true); // non-transparent figure
-	f.setBackgroundColor(new Color(null, Shape.defaultColor));
+	f.setBackgroundColor(new Color(null, getCastedModel().getColor()));
+	//f.setBackgroundColor(new Color(null, getColorForModel()));
 	return f;
 }
 
@@ -149,6 +151,19 @@ private IFigure createFigureForModel() {
 		throw new IllegalArgumentException();
 	}
 }
+
+/*// MODIFIED by Ken & Wouter
+private RGB getColorForModel() {
+	if(getModel() instanceof EllipticalShape) {
+		return EllipticalShape.defaultColor;
+	} else if(getModel() instanceof RectangularShape) {
+		return RectangularShape.defaultColor;
+	} else if(getModel() instanceof TriangularShape) {
+		return TriangularShape.defaultColor;
+	} else {
+		return Shape.defaultColor;
+	}
+}*/
 
 /**
  * Upon deactivation, detach from the model element as a property change listener.
@@ -245,9 +260,9 @@ public void propertyChange(PropertyChangeEvent evt) {
 	}
 }
 
-// MODIFIED
+// MODIFIED by Ken & Wouter
 protected void refreshColor() {
-	getFigure().setBackgroundColor(new Color(null,getCastedModel().getColor()));
+	getFigure().setBackgroundColor(new Color(null, getCastedModel().getColor()));
 }
 
 protected void refreshVisuals() {
@@ -259,7 +274,7 @@ protected void refreshVisuals() {
 			getCastedModel().getSize());
 	((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(), bounds);	
 	
-	// @todo Remove this here, only used to see effect of color change when creating a connection
-	refreshColor();
+	//// @todo Remove this here, only used to see effect of color change when creating a connection
+	////refreshColor();
 }
 }

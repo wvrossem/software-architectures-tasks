@@ -11,6 +11,7 @@
 package org.eclipse.gef.examples.shapes.model;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
 
 /**
  * An elliptical shape.
@@ -18,6 +19,15 @@ import org.eclipse.swt.graphics.Image;
  */
 public class EllipticalShape extends Shape {
 
+// MODIFIED by Ken & Wouter
+private static final RGB defaultColor = new RGB(100, 0, 0);
+//public static RGB getDefaultColor() {
+//	return new RGB(0, 100, 0);
+//}
+public EllipticalShape() {
+	color = defaultColor;
+}
+	
 /** A 16x16 pictogram of an elliptical shape. */
 private static final Image ELLIPSE_ICON = createImage("icons/ellipse16.gif");
 

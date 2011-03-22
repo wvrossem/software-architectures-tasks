@@ -11,6 +11,7 @@
 package org.eclipse.gef.examples.shapes.model;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
 
 
 /**
@@ -18,6 +19,16 @@ import org.eclipse.swt.graphics.Image;
  * @author Elias Volanakis
  */
 public class RectangularShape extends Shape {
+
+// MODIFIED by Ken & Wouter
+private static final RGB defaultColor = new RGB(0, 100, 0);
+//public static RGB getDefaultColor() {
+//	return new RGB(100, 0, 0);
+//}
+public RectangularShape() {
+	color = defaultColor;
+}
+
 /** A 16x16 pictogram of a rectangular shape. */
 private static final Image RECTANGLE_ICON = createImage("icons/rectangle16.gif");
 

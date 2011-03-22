@@ -98,10 +98,7 @@ public void execute() {
 	
 	//MODIFIED
 	oldTargetColor = target.getColor();
-	RGB sourceColor = source.getColor();
-	
-	// MODIFIED
-	target.addColor(sourceColor);
+	target.addColor(source.getColor());
 }
 
 /* (non-Javadoc)
@@ -109,8 +106,9 @@ public void execute() {
  */
 public void redo() {
 	// MODIFIED
-	// connection.reconnect();
-	execute();
+	connection.reconnect();
+	target.addColor(source.getColor());
+	//execute();
 }
 
 /**

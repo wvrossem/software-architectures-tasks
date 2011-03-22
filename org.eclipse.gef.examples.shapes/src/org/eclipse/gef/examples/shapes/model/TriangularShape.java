@@ -1,18 +1,29 @@
 package org.eclipse.gef.examples.shapes.model;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
 
 public class TriangularShape extends Shape {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+// MODIFIED by Ken & Wouter
+private static final RGB defaultColor = new RGB(0, 0, 100);
+//public static RGB getDefaultColor() {
+//	return new RGB(0, 0, 100);
+//}
+public TriangularShape() {
+	color = defaultColor;
+}
 
-	@Override
-	public Image getIcon() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+/** A 16x16 pictogram of a rectangular shape. */
+private static final Image TRIANGLE_ICON = createImage("icons/triangle16.gif");
 
+private static final long serialVersionUID = 1;
+
+public Image getIcon() {
+	return TRIANGLE_ICON;
+}
+
+public String toString() {
+	return "Triangle " + hashCode();
+}
 }
