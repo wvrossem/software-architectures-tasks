@@ -7,6 +7,10 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.DirectEditRequest;
 
+// MODIFIED by Wouter & Ken
+/**
+ * The whole class was added to be able to set shape colors, again with undo/redo in mind.
+ */
 public class ShapeSetColorCommand extends Command {
 	
 	/** Stores the old color */
@@ -35,25 +39,17 @@ public class ShapeSetColorCommand extends Command {
 		return super.canExecute();
 	}
 
-	@Override
 	public void execute() {
 		oldColor = new RGB(shape.getColor().red, shape.getColor().green, shape.getColor().blue);
 		shape.setColor(newColor);
-		//redo();
-	}
-	
-	@Override
-	public void redo() {
-		shape.setColor(newColor);
-		// TODO Auto-generated method stub
-		//super.redo();
 	}
 
-	@Override
+	public void redo() {
+		shape.setColor(newColor);
+	}
+
 	public void undo() {
 		shape.setColor(oldColor);
-		// TODO Auto-generated method stub
-		//super.undo();
 	}
 
 }

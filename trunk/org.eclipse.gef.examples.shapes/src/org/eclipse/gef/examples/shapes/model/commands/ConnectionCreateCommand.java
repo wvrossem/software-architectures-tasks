@@ -50,7 +50,8 @@ private final Shape source;
 /** Target endpoint for the connection. */
 private Shape target;
 
-// MODIFIED
+// MODIFIED by Wouter & Ken
+/** In order to be able to undo we need to be able to restore the color of the target. */
 private RGB oldTargetColor;
 
 /**
@@ -96,7 +97,8 @@ public void execute() {
 	// use the supplied line style
 	connection.setLineStyle(lineStyle);
 	
-	//MODIFIED
+	// MODIFIED by Ken & Wouter
+	/** Store the previous target color, and combine the target color with the source color. */
 	oldTargetColor = target.getColor();
 	target.addColor(source.getColor());
 }
@@ -105,10 +107,11 @@ public void execute() {
  * @see org.eclipse.gef.commands.Command#redo()
  */
 public void redo() {
-	// MODIFIED
 	connection.reconnect();
+	
+	// MODIFIED by Ken & Wouter
+	/** oldTargetColor has been already stored, so only the addColor should be redone. */
 	target.addColor(source.getColor());
-	//execute();
 }
 
 /**
@@ -128,7 +131,9 @@ public void setTarget(Shape target) {
  */
 public void undo() {
 	connection.disconnect();
-	// MODIFIED
+	
+	// MODIFIED by Wouter & Ken
+	/** oldTargetColor should be kept. Only the color of the target has to be changed. */
 	target.setColor(oldTargetColor);
 }
 }

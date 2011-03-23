@@ -163,8 +163,8 @@ private static class ShapesXYLayoutEditPolicy extends XYLayoutEditPolicy {
 	 */
 	protected Command getCreateCommand(CreateRequest request) {
 		Object childClass = request.getNewObjectType();
-		// MODIFIED
-		// Also need to return a create command for the new shape.
+		// MODIFIED by Wouter & Ken
+		/** Included the new triagle shapes here, so that a create command is returned for triangles too.*/
 		if (childClass == EllipticalShape.class || childClass == RectangularShape.class || childClass == TriangularShape.class) {
 			// return a command that can add a Shape to a ShapesDiagram 
 			return new ShapeCreateCommand((Shape)request.getNewObject(), 
