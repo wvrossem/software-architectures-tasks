@@ -67,14 +67,16 @@ private static PaletteContainer createShapesDrawer() {
 			ImageDescriptor.createFromFile(ShapesPlugin.class, "icons/rectangle24.gif"));
 	componentsDrawer.add(component);
 	
-	// MODIFIED
-	// Add a item to the palette window for the new shape.
+	// MODIFIED by Wouter & Ken
+	/**
+	 * Added a triangle component to the palette window for creating triangles.
+	 *	We also created new icons for the triangle shape.
+	 */
 	component = new CombinedTemplateCreationEntry(
 			"Triangle",
 			"Create a triangular shape", 
 			TriangularShape.class,
 			new SimpleFactory(TriangularShape.class), 
-			// @todo Create icons
 			ImageDescriptor.createFromFile(ShapesPlugin.class, "icons/triangle16.gif"), 
 			ImageDescriptor.createFromFile(ShapesPlugin.class, "icons/triangle24.gif"));
 	componentsDrawer.add(component);

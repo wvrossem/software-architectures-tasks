@@ -66,11 +66,11 @@ private static final String XPOS_PROP = "Shape.xPos";
 /** ID for the Y property value (used for by the corresponding property descriptor).  */
 private static final String YPOS_PROP = "Shape.yPos";
 
-// MODIFIED
+// MODIFIED by Wouter & Ken
 /** Property ID to use when the color of this shape is modified. */
 public static final String COLOR_PROP = "Shape.Color";
 
-// MODiFIED
+// MODIFIED by Wouter & Ken
 /** ID for the red color property value (used for by the corresponding property descriptor).  */
 private static final String RCOLOR_PROP = "Shape.rColor";
 /** ID for the green color property value (used for by the corresponding property descriptor).  */
@@ -78,11 +78,9 @@ private static final String GCOLOR_PROP = "Shape.gColor";
 /** ID for the blue color property value (used for by the corresponding property descriptor).  */
 private static final String BCOLOR_PROP = "Shape.bColor";
 
-// MODIFIED by Ken & Wouter
+// MODIFIED by Wouter & Ken
+/**	The default color for Shapes. */
 private static RGB defaultColor = new RGB(100, 100, 100);
-//public static RGB getDefaultColor() {
-//	return new RGB(100, 100, 100);
-//}
 
 /*
  * Initializes the property descriptors array.
@@ -96,24 +94,43 @@ static {
 			new TextPropertyDescriptor(YPOS_PROP, "Y"),
 			new TextPropertyDescriptor(WIDTH_PROP, "Width"),
 			new TextPropertyDescriptor(HEIGHT_PROP, "Height"),
-			// MODIFIED
+			// MODIFIED by Wouter & Ken
+			/** For shapes to have a color, they need to have descriptors for the property.
+			 *	 Added descriptors here for each component of a color R-G-B. 
+			 */
 			new TextPropertyDescriptor(RCOLOR_PROP, "Color - Red"),
 			new TextPropertyDescriptor(GCOLOR_PROP, "Color - Green"),
 			new TextPropertyDescriptor(BCOLOR_PROP, "Color - Blue"),
 	};
 	// use a custom cell editor validator for all four array entries
 	for (int i = 0; i < descriptors.length; i++) {
-		((PropertyDescriptor) descriptors[i]).setValidator(new ICellEditorValidator() {
-			public String isValid(Object value) {
-				int intValue = -1;
-				try {
-					intValue = Integer.parseInt((String) value);
-				} catch (NumberFormatException exc) {
-					return "Not a number";
+		// MODIFIED by Wouter & Ken
+		/** We add different cell editor validators for the color properties. */
+		if(i < 4) {
+			((PropertyDescriptor) descriptors[i]).setValidator(new ICellEditorValidator() {
+				public String isValid(Object value) {
+					int intValue = -1;
+					try {
+						intValue = Integer.parseInt((String) value);
+					} catch (NumberFormatException exc) {
+						return "Not a number";
+					}
+					return (intValue >= 0) ? null : "Value must be >=  0";
 				}
-				return (intValue >= 0) ? null : "Value must be >=  0";
-			}
-		});
+			});
+		} else {
+			((PropertyDescriptor) descriptors[i]).setValidator(new ICellEditorValidator() {
+				public String isValid(Object value) {
+					int intValue = -1;
+					try {
+						intValue = Integer.parseInt((String) value);
+					} catch (NumberFormatException exc) {
+						return "Not a number";
+					}
+					return (intValue >= 0) && (255 >= intValue) ? null : "Value must be between 0 and 255.";
+				}
+			});
+		}
 	}
 } // static
 
@@ -135,8 +152,8 @@ private Dimension size = new Dimension(50, 50);
 private List sourceConnections = new ArrayList();
 /** List of incoming Connections. */
 private List targetConnections = new ArrayList();
-// MODIFIED
-/** The color of this shape. */
+// MODIFIED by Wouter & Ken
+/** The current color of this shape. */
 protected RGB color = defaultColor;
 
 /**
@@ -204,7 +221,8 @@ public Object getPropertyValue(Object propertyId) {
 	if (WIDTH_PROP.equals(propertyId)) {
 		return Integer.toString(size.width);
 	}
-	// MODIFIED
+	// MODIFIED by Wouter & Ken
+	/** Added these return values for the color component property values. */
 	if (RCOLOR_PROP.equals(propertyId)) {
 		return Integer.toString(color.red);
 	}
@@ -225,9 +243,9 @@ public Dimension getSize() {
 	return size.getCopy();
 }
 
-// MODIFIED
+// MODIFIED by Wouter & Ken
 /**
- * Return the Color of this shape.
+ * Return the Color of this shape, simple accessor.
  * @return a non-null Dimension instance
  */
 public RGB getColor() {
@@ -300,7 +318,8 @@ public void setPropertyValue(Object propertyId, Object value) {
 	} else if (WIDTH_PROP.equals(propertyId)) {
 		int width = Integer.parseInt((String) value);
 		setSize(new Dimension(width, size.height));
-	// MODIFIED
+	// MODIFIED by Wouter & Ken
+	/** Added these cases for the added color property components. */
 	} else if (RCOLOR_PROP.equals(propertyId)) {
 		int red = Integer.parseInt((String) value);
 		red = red > 255 ? 255 : red;
@@ -321,7 +340,11 @@ public void setPropertyValue(Object propertyId, Object value) {
 	}
 }
 
-// MODIFIED
+//MODIFIED by Wouter & Ken
+/**
+ * Added this method to set a color. (e.g. when changing the color of a Shape)
+ *	firePropertyChange is necessary here for the views.
+ */
 public void setColor(RGB newColor) {
 	if (newColor != null) {
 		color = newColor;
@@ -331,6 +354,11 @@ public void setColor(RGB newColor) {
 }
 
 // MODIFIED by Ken & Wouter
+/**
+ * Added this method to stack colors. (e.g. color change by a connection end point.)
+ * 	firePropertyChange is necessary here for the views.
+ *  We correct the color values if the combination of two colors is no longer valid.
+ */
 public void addColor(RGB addColor) {
 	if (addColor != null) {
 		int red = color.red;

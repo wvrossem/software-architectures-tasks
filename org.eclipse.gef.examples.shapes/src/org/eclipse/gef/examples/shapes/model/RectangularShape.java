@@ -21,10 +21,11 @@ import org.eclipse.swt.graphics.RGB;
 public class RectangularShape extends Shape {
 
 // MODIFIED by Ken & Wouter
+/**	The default color for this type of Shape. */
 private static final RGB defaultColor = new RGB(0, 100, 0);
-//public static RGB getDefaultColor() {
-//	return new RGB(100, 0, 0);
-//}
+
+// MODIFIED by Ken & Wouter
+/**	The member 'color' added to Shape is set to the default color during creation. */
 public RectangularShape() {
 	color = defaultColor;
 }

@@ -123,14 +123,13 @@ protected void createEditPolicies() {
 }
 
 // MODIFIED by Ken & Wouter
-/*(non-Javadoc)
- * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#createFigure()
+/**
+ * We change the color of shapes to be no longer a constant green color.
  */
 protected IFigure createFigure() {
 	IFigure f = createFigureForModel();
 	f.setOpaque(true); // non-transparent figure
 	f.setBackgroundColor(new Color(null, getCastedModel().getColor()));
-	//f.setBackgroundColor(new Color(null, getColorForModel()));
 	return f;
 }
 
@@ -143,7 +142,8 @@ private IFigure createFigureForModel() {
 		return new Ellipse();
 	} else if (getModel() instanceof RectangularShape) {
 		return new RectangleFigure();
-	// MODIFIED
+	// MODIFIED by Wouter & Ken
+	/** We added a new shape to our model, so the corresponding figure should be created. */
 	} else if (getModel() instanceof TriangularShape) {
 		return new Triangle();
 	} else {
@@ -151,19 +151,6 @@ private IFigure createFigureForModel() {
 		throw new IllegalArgumentException();
 	}
 }
-
-/*// MODIFIED by Ken & Wouter
-private RGB getColorForModel() {
-	if(getModel() instanceof EllipticalShape) {
-		return EllipticalShape.defaultColor;
-	} else if(getModel() instanceof RectangularShape) {
-		return RectangularShape.defaultColor;
-	} else if(getModel() instanceof TriangularShape) {
-		return TriangularShape.defaultColor;
-	} else {
-		return Shape.defaultColor;
-	}
-}*/
 
 /**
  * Upon deactivation, detach from the model element as a property change listener.
@@ -185,7 +172,8 @@ protected ConnectionAnchor getConnectionAnchor() {
 			anchor = new EllipseAnchor(getFigure());
 		else if (getModel() instanceof RectangularShape)
 			anchor = new ChopboxAnchor(getFigure());
-		// Modified
+		// Modified by Wouter & Ken
+		/** We added a new shape to our model, so the corresponding connection anchor should be returned (we reuse the one from rectangular shapes. */
 		else if (getModel() instanceof TriangularShape)
 			anchor = new ChopboxAnchor(getFigure());
 		else
@@ -250,7 +238,8 @@ public void propertyChange(PropertyChangeEvent evt) {
 	String prop = evt.getPropertyName();
 	if (Shape.SIZE_PROP.equals(prop) || Shape.LOCATION_PROP.equals(prop)) {
 		refreshVisuals();
-	// MODIFIED
+	// MODIFIED by Wouter & Ken
+	/** We added a color property change, so it is handled here. */
 	} else if (Shape.COLOR_PROP.equals(prop)) {
 		refreshColor();
 	} else if (Shape.SOURCE_CONNECTIONS_PROP.equals(prop)) {
@@ -261,6 +250,7 @@ public void propertyChange(PropertyChangeEvent evt) {
 }
 
 // MODIFIED by Ken & Wouter
+/** The model has the new color so we use that value when setting the figure color. */
 protected void refreshColor() {
 	getFigure().setBackgroundColor(new Color(null, getCastedModel().getColor()));
 }
@@ -272,9 +262,6 @@ protected void refreshVisuals() {
 	// and will not draw it correctly.
 	Rectangle bounds = new Rectangle(getCastedModel().getLocation(),
 			getCastedModel().getSize());
-	((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(), bounds);	
-	
-	//// @todo Remove this here, only used to see effect of color change when creating a connection
-	////refreshColor();
+	((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(), bounds);
 }
 }
