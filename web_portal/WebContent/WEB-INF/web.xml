@@ -6,7 +6,7 @@
 		<servlet-class>softarch.portal.ui.InternetFrontEnd</servlet-class>
 		<init-param>
 			<param-name>config_file</param-name>
-			<param-value>C:\\Workspace\\Files\\Work\\Vub1011\\S2  SoftwArchit\\Exercises\\RepositoryOwn\\web_portal\\web_portal.cfg</param-value>
+			<param-value>C:\\Workspace\\Files\\Work\\Vub1011\\S2  SoftwArchit\\Exercises\\RepositorySVN\\web_portal\\web_portal.cfg</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>

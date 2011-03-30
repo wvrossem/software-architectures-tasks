@@ -1,4 +1,4 @@
-package softarch.portal.db;
+package softarch.portal.db.flatfile;
 
 import softarch.portal.data.CheapSubscription;
 import softarch.portal.data.ExpensiveSubscription;
