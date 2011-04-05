@@ -7,6 +7,31 @@ import java.util.Date;
  * @author Niels Joncheere
  */
 public abstract class UserProfile extends Data {
+	// MODIFIED
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
 	protected	String	username;
 	protected	String	password;
 	protected	String	firstName;

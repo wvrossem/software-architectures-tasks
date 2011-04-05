@@ -34,7 +34,9 @@ public class UserDatabase extends Database {
 	public void insert(UserProfile profile)
 		throws DatabaseException {
 		
-		executeSql(profile.asSql());
+		UserProfileCsvValues csvValues = new UserProfileCsvValues(profile);
+		// @todo
+		// insert(csvValues);
 	}
 
 	/**
