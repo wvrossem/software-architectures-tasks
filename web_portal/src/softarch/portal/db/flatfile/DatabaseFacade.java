@@ -13,20 +13,12 @@ import java.util.Date;
  */
 public class DatabaseFacade {
 	private UserDatabase	userDb;
-	private RegularDatabase	regularDb;
-	private RawDatabase	rawDb;
 
 	/**
 	 * Creates a new database facade.
 	 */
 	public DatabaseFacade(String dbUser, String dbPassword, String dbUrl) {
 		userDb		= new UserDatabase(	dbUser,
-							dbPassword,
-							dbUrl);
-		regularDb	= new RegularDatabase(	dbUser,
-							dbPassword,
-							dbUrl);
-		rawDb		= new RawDatabase(	dbUser,
 							dbPassword,
 							dbUrl);
 	}
@@ -74,7 +66,7 @@ public class DatabaseFacade {
 	public List findRecords(String informationType, String queryString)
 		throws DatabaseException {
 
-		return regularDb.findRecords(informationType, queryString);
+		throw new DatabaseException("Not implemented");
 	}
 
 	/**
@@ -84,7 +76,7 @@ public class DatabaseFacade {
 	public List findRecordsFrom(String informationType, Date date)
 		throws DatabaseException {
 
-		return regularDb.findRecordsFrom(informationType, date);
+		throw new DatabaseException("Not implemented");
 	}
 
 	/**
@@ -93,7 +85,7 @@ public class DatabaseFacade {
 	public void add(RegularData rd)
 		throws DatabaseException {
 	
-		regularDb.add(rd);
+		throw new DatabaseException("Not implemented");
 	}
 
 	/**
@@ -103,7 +95,7 @@ public class DatabaseFacade {
 	public int getNumberOfRegularRecords(String informationType)
 		throws DatabaseException {
 
-		return regularDb.getNumberOfRegularRecords(informationType);
+		throw new DatabaseException("Not implemented");
 	}
 
 	/**
@@ -112,7 +104,7 @@ public class DatabaseFacade {
 	public List getRawData()
 		throws DatabaseException {
 
-		return rawDb.getRawData();
+		throw new DatabaseException("Not implemented");
 	}
 
 	/**
@@ -121,13 +113,13 @@ public class DatabaseFacade {
 	public RawData getRawData(int id)
 		throws DatabaseException {
 
-		return rawDb.getRawData(id);
+		throw new DatabaseException("Not implemented");
 	}
 
 	public void addRawData(RegularData rd)
 		throws DatabaseException {
 
-		rawDb.addRawData(rd);
+		throw new DatabaseException("Not implemented");
 	}
 
 	/**
@@ -136,7 +128,7 @@ public class DatabaseFacade {
 	public void deleteRawData(RawData rd)
 		throws DatabaseException {
 
-		rawDb.deleteRawData(rd);
+		throw new DatabaseException("Not implemented");
 	}
 
 	/**
@@ -145,7 +137,7 @@ public class DatabaseFacade {
 	public void updateRawData(RawData rd)
 		throws DatabaseException {
 
-		rawDb.updateRawData(rd);
+		throw new DatabaseException("Not implemented");
 	}
 
 	/**
@@ -154,6 +146,6 @@ public class DatabaseFacade {
 	public int getNumberOfRawRecords()
 		throws DatabaseException {
 
-		return rawDb.getNumberOfRawRecords();
+		throw new DatabaseException("Not implemented");
 	}
 }
