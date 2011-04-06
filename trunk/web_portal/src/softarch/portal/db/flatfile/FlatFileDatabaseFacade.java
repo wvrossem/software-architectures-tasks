@@ -119,7 +119,7 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 	public RawData getRawData(int id)
 		throws FlatFileDatabaseException {
 
-		throw new FlatFileDatabaseException("Not implemented");
+		throw new FlatFileDatabaseException("The method 'getRawData' is not implemented");
 	}
 
 	public void addRawData(RegularData rd)
