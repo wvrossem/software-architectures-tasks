@@ -15,44 +15,58 @@ public class CsvController {
 		return new File(database+".csv").exists();
 	}
 	
-	public void insert(String database, CsvValues csvValues) {
+	public void createDatabase(String database, String[] fieldnames) throws DatabaseException {
 		try {
-			if ( !databaseExisits(database) ) throw new DatabaseException("Database does not exist");
+			if ( databaseExisits(database) ) throw new DatabaseException("Database already exists");
 			
-			if ( !exists(database, "id", (String)csvValues.get(0)) ) {
-
-				CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');
-				
-				csvOutput.write(csvValues.toString());			
+			CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');
+			
+			for (String fieldname : fieldnames) {
+				csvOutput.write(fieldname);
 			}
+			
+			csvOutput.endRecord();
+			csvOutput.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void update(String database, CsvValues csvValues) {
+	public void insert(String database, CsvValues csvValues) throws DatabaseException {
 		try {
 			if ( !databaseExisits(database) ) throw new DatabaseException("Database does not exist");
 			
-			if ( exists(database, "id", (String)csvValues.get(0)) ) {
+			if ( exists(database, "UserName", (String)csvValues.get(0)) ) {
+				throw new DatabaseException("Record already exists.");
+			} else {
 
 				CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');
 				
-				csvOutput.write(csvValues.toString());			
-			} else {
-				throw new DatabaseException("Record does not exist");
-			}
+				// csvOutput.write(csvValues.toString());	
+				
+				for ( Object el : csvValues.getValues() ) {
+					csvOutput.write(el.toString());
+				}
+				
+				csvOutput.endRecord();
+				csvOutput.close();
+			} 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+	}
+	
+	public void update(String database, CsvValues csvValues) throws DatabaseException {
+		if ( !databaseExisits(database) ) throw new DatabaseException("Database does not exist");
+		
+		if ( exists(database, "UserName", (String)csvValues.get(0)) ) {
+			// TODO implement update
+			throw new DatabaseException("Record exists.");
+		} else {
+			throw new DatabaseException("Record does not exist");
+		} 
 	}
 	
 	public CsvValues find(String database, String fieldName, String value) {

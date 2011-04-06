@@ -28,12 +28,12 @@ public class UserProfileCsvValues extends CsvValues {
 	UserProfileCsvValues(UserProfile profile) {
 		Object[] values = new Object[6];
 		
-		values[1] = profile.getUsername();
-		values[2] = profile.getPassword();
-		values[3] = profile.getFirstName();
-		values[4] = profile.getLastName();
-		values[5] = profile.getEmailAddress();
-		values[6] = profile.getLastLogin();
+		values[0] = profile.getUsername();
+		values[1] = profile.getPassword();
+		values[2] = profile.getFirstName();
+		values[3] = profile.getLastName();
+		values[4] = profile.getEmailAddress();
+		values[5] = profile.getLastLogin();
 		
 		this.values = values;
 	}

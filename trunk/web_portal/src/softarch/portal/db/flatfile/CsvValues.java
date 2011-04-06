@@ -30,4 +30,8 @@ public class CsvValues {
 		return values[idx];
 	}
 	
+	public Object[] getValues() {
+		return values;
+	}
+	
 }
