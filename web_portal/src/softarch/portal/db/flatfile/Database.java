@@ -30,11 +30,20 @@ public class Database {
 	}
 	
 	public void insert(CsvValues csvValues) {
-		csvController.insert(dbName, csvValues);
+		try {
+			csvController.insert(dbName, csvValues);
+		} catch (DatabaseException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public void update(CsvValues csvValues) {
-		csvController.update(dbName, csvValues);
+		try {
+			csvController.update(dbName, csvValues);
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public Object find(Object el) throws DatabaseException {
