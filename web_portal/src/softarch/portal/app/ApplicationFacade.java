@@ -27,20 +27,21 @@ public class ApplicationFacade {
 
 	/**
 	 * Creates a new application facade.
+	 * @throws ApplicationException 
 	 */
 	public ApplicationFacade(	String dbUser,
 					String dbPassword,
 					String dbUrl,
-					String dbType) {
+					String dbType) throws ApplicationException {
 		DatabaseFacade dbFacade;
 		
-		// MODIFIED
+		// MODIFIED by Wouter & Ken
 		if ( dbType.equals("SQL") ) {
 			dbFacade = new SQLDatabaseFacade(dbUser, dbPassword, dbUrl);
 		} else if ( dbType.equals("CSV") ) {
 			dbFacade = new FlatFileDatabaseFacade();
 		} else {
-			dbFacade = new FlatFileDatabaseFacade();
+			throw new ApplicationException("Unclear what DB to use: ... a SQL or CSV Db?");
 		}
 		
 		userManager		= new UserManager(dbFacade);

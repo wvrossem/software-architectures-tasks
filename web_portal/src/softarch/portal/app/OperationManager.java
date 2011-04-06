@@ -1,5 +1,6 @@
 package softarch.portal.app;
 
+import softarch.portal.db.DatabaseException;
 import softarch.portal.db.DatabaseFacade;
 import softarch.portal.db.sql.SQLDatabaseException;
 import softarch.portal.db.sql.SQLDatabaseFacade;
@@ -30,7 +31,7 @@ public class OperationManager extends Manager {
 		try {
 			return dbFacade.getNumberOfRegularRecords(informationType);
 		}
-		catch (SQLDatabaseException e) {
+		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -49,7 +50,7 @@ public class OperationManager extends Manager {
 		try {
 			return dbFacade.getNumberOfRawRecords();
 		}
-		catch (SQLDatabaseException e) {
+		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
