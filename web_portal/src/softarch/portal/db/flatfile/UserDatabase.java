@@ -104,17 +104,17 @@ public class UserDatabase extends Database {
 		
 		result = csvController.selectProfileWithUsername("FreeSubscription", userName);
 		if(!result.isEmpty()) {
-			return result.get(0);
+			return result.get(result.size() - 1); // return the current version
 		}
 		
 		result = csvController.selectProfileWithUsername("CheapSubscription", userName);
 		if(!result.isEmpty()) {
-			return result.get(0);
+			return result.get(result.size() - 1); // return the current version
 		}
 		
 		result = csvController.selectProfileWithUsername("ExpensiveSubscription", userName);
 		if(!result.isEmpty()) {
-			return result.get(0);
+			return result.get(result.size() - 1); // return the current version
 		}
 		
 		throw new FlatFileDatabaseException("Invalid username!");

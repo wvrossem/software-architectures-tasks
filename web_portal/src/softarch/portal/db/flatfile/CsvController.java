@@ -28,68 +28,97 @@ public class CsvController {
 	
 	public void createDatabase(String database, String[] fieldnames) throws FlatFileDatabaseException {
 		try {
-			if ( databaseExisits(database) ) throw new FlatFileDatabaseException("Database already exists");
+			if(databaseExisits(database)) {
+				throw new FlatFileDatabaseException("Database already exists");
+			}
 			
 			CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');
 			
-			for (String fieldname : fieldnames) {
+			for(String fieldname : fieldnames) {
 				csvOutput.write(fieldname);
 			}
-			
 			csvOutput.endRecord();
+			
 			csvOutput.close();
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void insertProfile(String database, CsvValues csvValues) throws FlatFileDatabaseException {
 		try {
-			if ( !databaseExisits(database) ) throw new FlatFileDatabaseException("Database does not exist");
+			if(!databaseExisits(database)) {
+				throw new FlatFileDatabaseException("Database does not exist");
+			}
 			
-			if ( !selectProfileWithUsername(database, (String)csvValues.get(0)).isEmpty() ) {
+			if(!selectProfileWithUsername(database, (String)csvValues.get(0)).isEmpty()) {
 				throw new FlatFileDatabaseException("Record already exists.");
-			} else {
+			}
 
-				CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');	
-				
-				for ( Object el : csvValues.getValues() ) {
-					csvOutput.write(el.toString());
-				}
-				
-				csvOutput.endRecord();
-				csvOutput.close();
-			} 
-		} catch (IOException e) {
+			CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');	
+			
+			for(Object el : csvValues.getValues()) {
+				csvOutput.write(el.toString());
+			}
+			csvOutput.endRecord();
+			
+			csvOutput.close(); 
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void updateProfile(String database, CsvValues csvValues) throws FlatFileDatabaseException {
-		if ( !databaseExisits(database) ) throw new FlatFileDatabaseException("Database does not exist");
+		// The csv file might have multple lines with the same username:
+		//  - usrname is considered to be unique for a profile
+		//  - lines with the same username are considered different versions of the profile
+		//  - we add a line to the csv with the most recent version
+		//  - this approach has several advantages:
+		//		- no need to completely rewrite the csv file after each update (speed considerations)
+		//		- we have complete history information of this user profile
+		//		- this way we could add a functionality like restore previous versions
 		
-		List<UserProfile> result;
-		result = selectProfileWithUsername(database, (String)csvValues.get(0));
-		
-		if ( result.isEmpty() ) {
-			throw new FlatFileDatabaseException("Record does not exist");
-		}
-		
-		// TODO
+		try {
+			if(!databaseExisits(database)) {
+				throw new FlatFileDatabaseException("Database does not exist");
+			}
+			
+			List<UserProfile> result = selectProfileWithUsername(database, (String)csvValues.get(0));
+			if(result.isEmpty()) {
+				throw new FlatFileDatabaseException("Record does not exist");
+			}
+			
+			CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');
+			
+			for(Object el : csvValues.getValues()) {
+				csvOutput.write(el.toString());
+			}
+			csvOutput.endRecord();
+			
+			csvOutput.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	public List<UserProfile> selectProfileWithUsername(String database, String userName) {
+		// The csv file might have multiple lines with the same username:
+		//  - username is considered to be unique for a profile
+		//  - lines with the same username are considered different versions of the profile
+		//  - we return a list with all the versions (earliest to most recent)
+		
 		List<UserProfile> result = new ArrayList<UserProfile>();
 		
 		try {
-			if ( !databaseExisits(database) ) throw new FlatFileDatabaseException("Database does not exist");
+			if(!databaseExisits(database)) {
+				throw new FlatFileDatabaseException("Database does not exist");
+			}
 			
 			CsvReader db = new CsvReader(database+".csv");
 			
 			db.readHeaders();
-			
-			while (db.readRecord()) {
-				if (db.get("UserName").equals(userName)) {
+			while(db.readRecord()) {
+				if(db.get("UserName").equals(userName)) {
 					if(database.equals("freeuser")) {
 						result.add(new FreeSubscription(
 								db.get("UserName"),
@@ -100,7 +129,7 @@ public class CsvController {
 								new SimpleDateFormat("E MMM d HH:mm:ss z yyyy", new Locale("en"))
 								.parse((String) db.get("LastLogin"))
 							));
-					} else if(database == "cheapuser") {
+					} else if(database.equals("cheapuser")) {
 						result.add(new CheapSubscription(
 								db.get("UserName"),
 								db.get("Password"),
@@ -110,7 +139,7 @@ public class CsvController {
 								new SimpleDateFormat("E MMM d HH:mm:ss z yyyy", new Locale("en"))
 								.parse((String) db.get("LastLogin"))
 							));					
-					} else if(database == "expensiveuser") {
+					} else if(database.equals("expensiveuser")) {
 						result.add(new ExpensiveSubscription(
 								db.get("UserName"),
 								db.get("Password"),
@@ -121,18 +150,15 @@ public class CsvController {
 								.parse((String) db.get("LastLogin"))
 							));
 					}
-					break;
-				} 
+				}
 			}
 			
 			db.close();
-			
-			return result;
-		} catch (FlatFileDatabaseException e) {
+		} catch(FlatFileDatabaseException e) {
 			e.printStackTrace();
-		} catch (ParseException e) {
+		} catch(ParseException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 
