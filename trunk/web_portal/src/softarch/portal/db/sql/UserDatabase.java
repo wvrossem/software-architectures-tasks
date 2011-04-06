@@ -35,6 +35,8 @@ public class UserDatabase extends Database {
 		throws SQLDatabaseException {
 		
 		executeSql(profile.asSql());
+		//List p = profile.asList(); + type of profile ...
+		// executeSql(INSERT ... P1 P2 ... type of profile)
 	}
 
 	/**
