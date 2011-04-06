@@ -5,9 +5,14 @@ import softarch.portal.data.RegularData;
 import softarch.portal.data.UserProfile;
 import softarch.portal.db.DatabaseFacade;
 import softarch.portal.db.flatfile.FlatFileDatabaseFacade;
+import softarch.portal.db.sql.SQLDatabaseFacade;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Date;
+import java.util.Properties;
 
 /**
  * This class implements a facade for all of the application layer's
@@ -25,10 +30,18 @@ public class ApplicationFacade {
 	 */
 	public ApplicationFacade(	String dbUser,
 					String dbPassword,
-					String dbUrl) {
+					String dbUrl,
+					String dbType) {
+		DatabaseFacade dbFacade;
 		
-		DatabaseFacade dbFacade
-			= new FlatFileDatabaseFacade();
+		// MODIFIED
+		if ( dbType.equals("SQL") ) {
+			dbFacade = new SQLDatabaseFacade(dbUser, dbPassword, dbUrl);
+		} else if ( dbType.equals("CSV") ) {
+			dbFacade = new FlatFileDatabaseFacade();
+		} else {
+			dbFacade = new FlatFileDatabaseFacade();
+		}
 		
 		userManager		= new UserManager(dbFacade);
 		queryManager		= new QueryManager(dbFacade);
