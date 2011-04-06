@@ -192,11 +192,9 @@ public class UserManager extends Manager {
 				throw new ApplicationException(
 					"The user \"" + username + "\" is " +
 					"not logged in!");
-		}
-		catch (SQLDatabaseException e) {
+		} catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		} catch (FlatFileDatabaseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

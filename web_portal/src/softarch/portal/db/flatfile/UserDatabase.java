@@ -62,14 +62,15 @@ public class UserDatabase extends Database {
 	public void insert(UserProfile profile) {
 		UserProfileCsvValues csvValues = new UserProfileCsvValues(profile);
 		try {
-			if(profile instanceof FreeSubscription ) {
+			if(profile instanceof FreeSubscription) {
 				csvController.insertProfile(dbFreeSubscription, csvValues);
 			} else if(profile instanceof CheapSubscription) {
 				csvController.insertProfile(dbCheapSubscription, csvValues);
 			} else if(profile instanceof ExpensiveSubscription) {
 				csvController.insertProfile(dbExpensiveSubscription, csvValues);
+			} else {
+				throw new FlatFileDatabaseException("Can't insert an invalid profile type.");
 			}
-			throw new FlatFileDatabaseException("Invalid profile type.");
 		} catch (FlatFileDatabaseException e) {
 			System.out.println(e.getMessage());
 		}
@@ -81,14 +82,15 @@ public class UserDatabase extends Database {
 	public void update(UserProfile profile) {		
 		UserProfileCsvValues csvValues = new UserProfileCsvValues(profile);
 		try {
-			if(profile instanceof FreeSubscription ) {
+			if(profile instanceof FreeSubscription) {
 				csvController.updateProfile(dbFreeSubscription, csvValues);
 			} else if(profile instanceof CheapSubscription) {
 				csvController.updateProfile(dbCheapSubscription, csvValues);
 			} else if(profile instanceof ExpensiveSubscription) {
 				csvController.updateProfile(dbExpensiveSubscription, csvValues);
+			} else {
+				throw new FlatFileDatabaseException("Can't update an invalid profile type.");
 			}
-			throw new FlatFileDatabaseException("Invalid profile type.");
 		} catch (FlatFileDatabaseException e) {
 			System.out.println(e.getMessage());
 		}
