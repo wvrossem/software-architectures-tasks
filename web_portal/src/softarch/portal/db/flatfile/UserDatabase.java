@@ -9,6 +9,7 @@ import softarch.portal.data.Operator;
 import softarch.portal.data.RegularAdministrator;
 import softarch.portal.data.RegularUser;
 import softarch.portal.data.UserProfile;
+import softarch.portal.db.sql.SQLDatabaseException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -26,11 +28,15 @@ import java.util.Locale;
  * @author Niels Joncheere
  */
 public class UserDatabase extends Database {
+	protected String dbFreeSubscription = "freeuser";
+	protected String dbCheapSubscription = "cheapuser";
+	protected String dbExpensiveSubscription = "expensiveuser";
+	
 	/**
 	 * Creates a new user database.
 	 */
 	public UserDatabase() {
-		super("users");
+		super();
 		
 		String fieldnames[] = {
 				"UserName",
@@ -42,9 +48,11 @@ public class UserDatabase extends Database {
 		};
 		
 		try {
-			csvController.createDatabase("users", fieldnames);
+			csvController.createDatabase(dbFreeSubscription, fieldnames);
+			csvController.createDatabase(dbCheapSubscription, fieldnames);
+			csvController.createDatabase(dbExpensiveSubscription, fieldnames);
 		} catch (FlatFileDatabaseException e) {
-			
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -53,7 +61,18 @@ public class UserDatabase extends Database {
 	 */
 	public void insert(UserProfile profile) {
 		UserProfileCsvValues csvValues = new UserProfileCsvValues(profile);
-		insert(csvValues);	
+		try {
+			if(profile instanceof FreeSubscription ) {
+				csvController.insertProfile(dbFreeSubscription, csvValues);
+			} else if(profile instanceof CheapSubscription) {
+				csvController.insertProfile(dbCheapSubscription, csvValues);
+			} else if(profile instanceof ExpensiveSubscription) {
+				csvController.insertProfile(dbExpensiveSubscription, csvValues);
+			}
+			throw new FlatFileDatabaseException("Invalid profile type.");
+		} catch (FlatFileDatabaseException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	/**
@@ -61,23 +80,44 @@ public class UserDatabase extends Database {
 	 */
 	public void update(UserProfile profile) {		
 		UserProfileCsvValues csvValues = new UserProfileCsvValues(profile);
-		update(csvValues);
+		try {
+			if(profile instanceof FreeSubscription ) {
+				csvController.updateProfile(dbFreeSubscription, csvValues);
+			} else if(profile instanceof CheapSubscription) {
+				csvController.updateProfile(dbCheapSubscription, csvValues);
+			} else if(profile instanceof ExpensiveSubscription) {
+				csvController.updateProfile(dbExpensiveSubscription, csvValues);
+			}
+			throw new FlatFileDatabaseException("Invalid profile type.");
+		} catch (FlatFileDatabaseException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	/**
 	 * Returns the user with the specified username.
+	 * @throws SQLDatabaseException 
+	 * @throws FlatFileDatabaseException 
 	 */
-	public UserProfile findUser(String userName) {
-		try {
-			return find(userName);
-		} catch (FlatFileDatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public UserProfile findUser(String userName) throws FlatFileDatabaseException {
+		List<UserProfile> result;
+		
+		result = csvController.selectProfileWithUsername("FreeSubscription", userName);
+		if(!result.isEmpty()) {
+			return result.get(0);
 		}
-		return null;
+		
+		result = csvController.selectProfileWithUsername("CheapSubscription", userName);
+		if(!result.isEmpty()) {
+			return result.get(0);
+		}
+		
+		result = csvController.selectProfileWithUsername("ExpensiveSubscription", userName);
+		if(!result.isEmpty()) {
+			return result.get(0);
+		}
+		
+		throw new FlatFileDatabaseException("Invalid username!");
 	}
 
 	/**
@@ -85,29 +125,23 @@ public class UserDatabase extends Database {
 	 * @throws FlatFileDatabaseException 
 	 */
 	public boolean userExists(String userName) throws FlatFileDatabaseException {
-		return exists(userName);
-	}
-
-	public UserProfile find(String userName) throws FlatFileDatabaseException, ParseException {
-		CsvValues csvValues = csvController.find(dbName, "UserName", userName);
+		List<UserProfile> result;
 		
-		// TODO Check subscription type
-		@SuppressWarnings("deprecation")
-		UserProfile userProfile = new CheapSubscription(
-				(String) csvValues.get(0), 
-				(String) csvValues.get(1), 
-				(String) csvValues.get(2), 
-				(String) csvValues.get(3), 
-				(String) csvValues.get(4), 
-				new SimpleDateFormat("E MMM d HH:mm:ss z yyyy", new Locale("en"))
-					.parse((String) csvValues.get(5)));
+		result = csvController.selectProfileWithUsername("FreeSubscription", userName);
+		if(!result.isEmpty()) {
+			return true;
+		}
 		
-		return userProfile;
+		result = csvController.selectProfileWithUsername("CheapSubscription", userName);
+		if(!result.isEmpty()) {
+			return true;
+		}
+		
+		result = csvController.selectProfileWithUsername("ExpensiveSubscription", userName);
+		if(!result.isEmpty()) {
+			return true;
+		}
+		
+		return false;
 	}
-
-	public boolean exists(String userName) throws FlatFileDatabaseException {
-		return csvController.exists(dbName, "UserName", userName);
-	}
-	
-	
 }

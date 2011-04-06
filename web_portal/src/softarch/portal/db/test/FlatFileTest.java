@@ -19,7 +19,7 @@ public class FlatFileTest {
 			
 			db.insert(user);
 			
-			UserProfile profile = db.find("wvrossem");
+			UserProfile profile = db.findUser("wvrossem");
 			
 			System.out.println(profile.getLastName());
 			System.out.println(profile.getLastLogin());

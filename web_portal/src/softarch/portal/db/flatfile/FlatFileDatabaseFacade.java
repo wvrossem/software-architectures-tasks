@@ -4,6 +4,7 @@ import softarch.portal.data.RawData;
 import softarch.portal.data.RegularData;
 import softarch.portal.data.UserProfile;
 import softarch.portal.db.DatabaseFacade;
+import softarch.portal.db.sql.SQLDatabaseException;
 
 import java.util.List;
 import java.util.Date;
@@ -42,6 +43,7 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 
 	/**
 	 * Returns the user with the specified username.
+	 * @throws SQLDatabaseException 
 	 */
 	public UserProfile findUser(String username)
 		throws FlatFileDatabaseException {
