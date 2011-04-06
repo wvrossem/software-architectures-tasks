@@ -8,6 +8,7 @@ import softarch.portal.db.sql.SQLDatabaseException;
 
 import java.util.List;
 import java.util.Date;
+import java.util.Vector;
 
 /**
  * This class implements a facade for all of the database layer's functionality.
@@ -67,7 +68,8 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 	public List findRecords(String informationType, String queryString)
 		throws FlatFileDatabaseException {
 
-		throw new FlatFileDatabaseException("Not implemented");
+		//throw new FlatFileDatabaseException("Not implemented");
+		return new Vector();
 	}
 
 	/**
@@ -77,7 +79,8 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 	public List findRecordsFrom(String informationType, Date date)
 		throws FlatFileDatabaseException {
 
-		throw new FlatFileDatabaseException("Not implemented");
+		//throw new FlatFileDatabaseException("Not implemented");
+		return new Vector();
 	}
 
 	/**
@@ -86,7 +89,7 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 	public void add(RegularData rd)
 		throws FlatFileDatabaseException {
 	
-		throw new FlatFileDatabaseException("Not implemented");
+		//throw new FlatFileDatabaseException("Not implemented");
 	}
 
 	/**
@@ -96,7 +99,8 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 	public int getNumberOfRegularRecords(String informationType)
 		throws FlatFileDatabaseException {
 
-		throw new FlatFileDatabaseException("Not implemented");
+		//throw new FlatFileDatabaseException("Not implemented");
+		return 0;
 	}
 
 	/**
@@ -105,7 +109,8 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 	public List getRawData()
 		throws FlatFileDatabaseException {
 
-		throw new FlatFileDatabaseException("Not implemented");
+		//throw new FlatFileDatabaseException("Not implemented");
+		return new Vector();
 	}
 
 	/**
@@ -120,7 +125,7 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 	public void addRawData(RegularData rd)
 		throws FlatFileDatabaseException {
 
-		throw new FlatFileDatabaseException("Not implemented");
+		//throw new FlatFileDatabaseException("Not implemented");
 	}
 
 	/**
@@ -129,7 +134,7 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 	public void deleteRawData(RawData rd)
 		throws FlatFileDatabaseException {
 
-		throw new FlatFileDatabaseException("Not implemented");
+		//throw new FlatFileDatabaseException("Not implemented");
 	}
 
 	/**
@@ -138,7 +143,7 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 	public void updateRawData(RawData rd)
 		throws FlatFileDatabaseException {
 
-		throw new FlatFileDatabaseException("Not implemented");
+		//throw new FlatFileDatabaseException("Not implemented");
 	}
 
 	/**
@@ -147,6 +152,7 @@ public class FlatFileDatabaseFacade extends DatabaseFacade {
 	public int getNumberOfRawRecords()
 		throws FlatFileDatabaseException {
 
-		throw new FlatFileDatabaseException("Not implemented");
+		//throw new FlatFileDatabaseException("Not implemented");
+		return 0;
 	}
 }

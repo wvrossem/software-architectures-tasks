@@ -102,17 +102,17 @@ public class UserDatabase extends Database {
 	public UserProfile findUser(String userName) throws FlatFileDatabaseException {
 		List<UserProfile> result;
 		
-		result = csvController.selectProfileWithUsername("FreeSubscription", userName);
+		result = csvController.selectProfileWithUsername(dbFreeSubscription, userName);
 		if(!result.isEmpty()) {
 			return result.get(result.size() - 1); // return the current version
 		}
 		
-		result = csvController.selectProfileWithUsername("CheapSubscription", userName);
+		result = csvController.selectProfileWithUsername(dbCheapSubscription, userName);
 		if(!result.isEmpty()) {
 			return result.get(result.size() - 1); // return the current version
 		}
 		
-		result = csvController.selectProfileWithUsername("ExpensiveSubscription", userName);
+		result = csvController.selectProfileWithUsername(dbExpensiveSubscription, userName);
 		if(!result.isEmpty()) {
 			return result.get(result.size() - 1); // return the current version
 		}
@@ -127,17 +127,17 @@ public class UserDatabase extends Database {
 	public boolean userExists(String userName) throws FlatFileDatabaseException {
 		List<UserProfile> result;
 		
-		result = csvController.selectProfileWithUsername("FreeSubscription", userName);
+		result = csvController.selectProfileWithUsername(dbFreeSubscription, userName);
 		if(!result.isEmpty()) {
 			return true;
 		}
 		
-		result = csvController.selectProfileWithUsername("CheapSubscription", userName);
+		result = csvController.selectProfileWithUsername(dbCheapSubscription, userName);
 		if(!result.isEmpty()) {
 			return true;
 		}
 		
-		result = csvController.selectProfileWithUsername("ExpensiveSubscription", userName);
+		result = csvController.selectProfileWithUsername(dbExpensiveSubscription, userName);
 		if(!result.isEmpty()) {
 			return true;
 		}
