@@ -1,7 +1,8 @@
 package softarch.portal.app;
 
-import softarch.portal.db.sql.DatabaseException;
-import softarch.portal.db.sql.DatabaseFacade;
+import softarch.portal.db.DatabaseFacade;
+import softarch.portal.db.sql.SQLDatabaseException;
+import softarch.portal.db.sql.SQLDatabaseFacade;
 
 /**
  * This class is responsible for handling requests for diagnostic information,
@@ -29,7 +30,7 @@ public class OperationManager extends Manager {
 		try {
 			return dbFacade.getNumberOfRegularRecords(informationType);
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -48,7 +49,7 @@ public class OperationManager extends Manager {
 		try {
 			return dbFacade.getNumberOfRawRecords();
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {

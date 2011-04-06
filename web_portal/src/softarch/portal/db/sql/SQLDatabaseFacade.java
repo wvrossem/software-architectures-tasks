@@ -1,8 +1,9 @@
-package softarch.portal.db.flatfile;
+package softarch.portal.db.sql;
 
 import softarch.portal.data.RawData;
 import softarch.portal.data.RegularData;
 import softarch.portal.data.UserProfile;
+import softarch.portal.db.DatabaseFacade;
 
 import java.util.List;
 import java.util.Date;
@@ -11,21 +12,31 @@ import java.util.Date;
  * This class implements a facade for all of the database layer's functionality.
  * @author Niels Joncheere
  */
-public class DatabaseFacade {
+public class SQLDatabaseFacade extends DatabaseFacade{
 	private UserDatabase	userDb;
+	private RegularDatabase	regularDb;
+	private RawDatabase	rawDb;
 
 	/**
 	 * Creates a new database facade.
 	 */
-	public DatabaseFacade(String dbUser, String dbPassword, String dbUrl) {
-		userDb		= new UserDatabase();
+	public SQLDatabaseFacade(String dbUser, String dbPassword, String dbUrl) {
+		userDb		= new UserDatabase(	dbUser,
+							dbPassword,
+							dbUrl);
+		regularDb	= new RegularDatabase(	dbUser,
+							dbPassword,
+							dbUrl);
+		rawDb		= new RawDatabase(	dbUser,
+							dbPassword,
+							dbUrl);
 	}
 
 	/**
 	 * Inserts a new user profile into the user database.
 	 */
 	public void insert(UserProfile profile)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 	
 		userDb.insert(profile);
 	}
@@ -34,7 +45,7 @@ public class DatabaseFacade {
 	 * Updates an existing user profile in the user database.
 	 */
 	public void update(UserProfile profile)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		userDb.update(profile);
 	}
@@ -43,7 +54,7 @@ public class DatabaseFacade {
 	 * Returns the user with the specified username.
 	 */
 	public UserProfile findUser(String username)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		return userDb.findUser(username);
 	}
@@ -52,7 +63,7 @@ public class DatabaseFacade {
 	 * Checks whether a user with the specified username exists.
 	 */
 	public boolean userExists(String username)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		return userDb.userExists(username);
 	}
@@ -62,9 +73,9 @@ public class DatabaseFacade {
 	 * that match the given query string.
 	 */
 	public List findRecords(String informationType, String queryString)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
-		throw new DatabaseException("Not implemented");
+		return regularDb.findRecords(informationType, queryString);
 	}
 
 	/**
@@ -72,18 +83,18 @@ public class DatabaseFacade {
 	 * that were added after the given date.
 	 */
 	public List findRecordsFrom(String informationType, Date date)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
-		throw new DatabaseException("Not implemented");
+		return regularDb.findRecordsFrom(informationType, date);
 	}
 
 	/**
 	 * Adds a new regular data object to the regular database.
 	 */
 	public void add(RegularData rd)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 	
-		throw new DatabaseException("Not implemented");
+		regularDb.add(rd);
 	}
 
 	/**
@@ -91,59 +102,59 @@ public class DatabaseFacade {
 	 * regular database.
 	 */
 	public int getNumberOfRegularRecords(String informationType)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
-		throw new DatabaseException("Not implemented");
+		return regularDb.getNumberOfRegularRecords(informationType);
 	}
 
 	/**
 	 * Returns a list of all raw data.
 	 */
 	public List getRawData()
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
-		throw new DatabaseException("Not implemented");
+		return rawDb.getRawData();
 	}
 
 	/**
 	 * Returns a specific raw data object.
 	 */
 	public RawData getRawData(int id)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
-		throw new DatabaseException("Not implemented");
+		return rawDb.getRawData(id);
 	}
 
 	public void addRawData(RegularData rd)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
-		throw new DatabaseException("Not implemented");
+		rawDb.addRawData(rd);
 	}
 
 	/**
 	 * Deletes a raw data object.
 	 */
 	public void deleteRawData(RawData rd)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
-		throw new DatabaseException("Not implemented");
+		rawDb.deleteRawData(rd);
 	}
 
 	/**
 	 * Updates a raw data object.
 	 */
 	public void updateRawData(RawData rd)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
-		throw new DatabaseException("Not implemented");
+		rawDb.updateRawData(rd);
 	}
 
 	/**
 	 * Returns the number of records in the raw database.
 	 */
 	public int getNumberOfRawRecords()
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
-		throw new DatabaseException("Not implemented");
+		return rawDb.getNumberOfRawRecords();
 	}
 }

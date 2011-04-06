@@ -32,7 +32,7 @@ public class Database {
 	public void insert(CsvValues csvValues) {
 		try {
 			csvController.insert(dbName, csvValues);
-		} catch (DatabaseException e) {
+		} catch (FlatFileDatabaseException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -40,17 +40,17 @@ public class Database {
 	public void update(CsvValues csvValues) {
 		try {
 			csvController.update(dbName, csvValues);
-		} catch (DatabaseException e) {
+		} catch (FlatFileDatabaseException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}
 	}
 	
-	public Object find(Object el) throws DatabaseException {
-		throw new DatabaseException("Not implemented");
+	public Object find(Object el) throws FlatFileDatabaseException {
+		throw new FlatFileDatabaseException("Not implemented");
 	}
 	
-	public boolean exists(Object el) throws DatabaseException {
-		throw new DatabaseException("Not implemented");
+	public boolean exists(Object el) throws FlatFileDatabaseException {
+		throw new FlatFileDatabaseException("Not implemented");
 	}
 }

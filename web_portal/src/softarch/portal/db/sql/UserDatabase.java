@@ -32,7 +32,7 @@ public class UserDatabase extends Database {
 	 * Inserts a new user profile into the user database.
 	 */
 	public void insert(UserProfile profile)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 		
 		executeSql(profile.asSql());
 	}
@@ -41,7 +41,7 @@ public class UserDatabase extends Database {
 	 * Updates an existing user profile in the user database.
 	 */
 	public void update(UserProfile profile)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 		
 		executeSql(profile.asSqlUpdate());
 	}
@@ -50,7 +50,7 @@ public class UserDatabase extends Database {
 	 * Returns the user with the specified username.
 	 */
 	public UserProfile findUser(String username)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		// Connect to the database:
 		try {
@@ -101,16 +101,16 @@ public class UserDatabase extends Database {
 			if (rs.first())
 				return new ExpertAdministrator(rs);
 
-			throw new DatabaseException("Invalid username!");
+			throw new SQLDatabaseException("Invalid username!");
 		}
 
 		// Exception handling:
 		catch (SQLException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"SQL Exception: " + e.getMessage());
 		}
 		catch (ParseException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"Parse Exception: " + e.getMessage());
 		}
 	}
@@ -119,7 +119,7 @@ public class UserDatabase extends Database {
 	 * Checks whether a user with the specified username exists.
 	 */
 	public boolean userExists(String username)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		// Connect to the database:
 		try {
@@ -174,7 +174,7 @@ public class UserDatabase extends Database {
 
 		// Exception handling:
 		catch (SQLException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"SQL Exception: " + e.getMessage());
 		}
 	}

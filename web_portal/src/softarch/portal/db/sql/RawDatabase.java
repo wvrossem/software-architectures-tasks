@@ -34,7 +34,7 @@ public class RawDatabase extends Database {
 	 * Returns a list of all raw data.
 	 */
 	public List getRawData()
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		// Connect to the database:
 		try {
@@ -118,18 +118,18 @@ public class RawDatabase extends Database {
 
 		// Exception handling:
 		catch (SQLException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"SQL Exception: " + e.getMessage());
 		}
 		catch (Exception e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"The raw database has caught an unexpected " +
 				"exception: " + e.getMessage());
 		}
 	}
 
 	private int getNewId()
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		// Connect to the database:
 		try {
@@ -140,19 +140,19 @@ public class RawDatabase extends Database {
 			if (rs.first())
 				return rs.getInt("ID") + 1;
 			else
-				throw new DatabaseException("The raw database could not find a new id!");
+				throw new SQLDatabaseException("The raw database could not find a new id!");
 		}
 
 		// Exception handling:
 		catch (SQLException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"SQL Exception: " + e.getMessage());
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw e;
 		}
 		catch (Exception e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"The raw database has caught an unexpected " +
 				"exception: " + e.getMessage());
 		}
@@ -162,7 +162,7 @@ public class RawDatabase extends Database {
 	 * Returns a specific raw data object.
 	 */
 	public RawData getRawData(int id)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		// Connect to the database:
 		try {
@@ -227,26 +227,26 @@ public class RawDatabase extends Database {
 				return rawData.setStructure(new InterestingWebsite(rs));
 			}
 
-			throw new DatabaseException("The raw data object with ID " + id + " was not found in the database.");
+			throw new SQLDatabaseException("The raw data object with ID " + id + " was not found in the database.");
 		}
 
 		// Exception handling:
 		catch (SQLException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"SQL Exception: " + e.getMessage());
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw e;
 		}
 		catch (Exception e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"The raw database has caught an unexpected " +
 				"exception: " + e.getMessage());
 		}
 	}
 
 	public void addRawData(RegularData regularData)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		int id = getNewId();
 		RawData rawData = new RawData(id, regularData);
@@ -257,7 +257,7 @@ public class RawDatabase extends Database {
 	 * Deletes a raw data object.
 	 */
 	public void deleteRawData(RawData rd)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		int id = rd.getId();
 		executeSql("DELETE FROM Raw WHERE ID = " + id + ";");
@@ -273,7 +273,7 @@ public class RawDatabase extends Database {
 	 * Updates a raw data object.
 	 */
 	public void updateRawData(RawData rd)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		deleteRawData(rd);
 		executeSql(rd.asSql());
@@ -283,7 +283,7 @@ public class RawDatabase extends Database {
 	 * Returns the number of records in the raw database.
 	 */
 	public int getNumberOfRawRecords()
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		// Connect to the database:
 		try {
@@ -299,11 +299,11 @@ public class RawDatabase extends Database {
 
 		// Exception handling:
 		catch (SQLException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"SQL Exception: " + e.getMessage());
 		}
 		catch (Exception e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"The raw database has caught an unexpected " +
 				"exception: " + e.getMessage());
 		}
