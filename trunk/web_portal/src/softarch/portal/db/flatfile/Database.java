@@ -9,81 +9,39 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Iterator;
 
+import softarch.portal.data.UserProfile;
+
 /**
  * This abstract class implements the behaviour that is to be shared
  * by all databases.
  * @author Niels Joncheere
  */
 public class Database {
-	protected String dbUser;
-	protected String dbPassword;
-	protected String dbUrl;
+	protected String dbName;
+	protected CsvController csvController;
 
 	/**
 	 * Creates a new database.
 	 */
-	public Database(String dbUser, String dbPassword, String dbUrl) {
-		this.dbUser	= dbUser;
-		this.dbPassword	= dbPassword;
-		this.dbUrl	= dbUrl;
-	}
-
-	/**
-	 * Executes the given SQL queries.
-	 */
-	public void executeSql(List queries)
-		throws DatabaseException {
-
-		for (Iterator i = queries.iterator(); i.hasNext(); )
-			executeSql((String) i.next());
+	public Database(String dbName) {
+		this.dbName = dbName;
+		
+		csvController = new CsvController();
 	}
 	
-	public Connection getConnection() throws DatabaseException, SQLException {
-		// Load the HyperSQL JDBC driver:
-		try {
-			Class.forName("org.hsqldb.jdbcDriver").newInstance();
-		}
-		catch (Exception e) {
-			throw new DatabaseException(
-				"Unable to load the HyperSQL JDBC driver!");
-		}
-		
-		Connection dbConnection = DriverManager.getConnection(
-									"jdbc:hsqldb:" + dbUrl,
-									dbUser,
-									dbPassword);
-		
-		return dbConnection;
+	public void insert(CsvValues csvValues) {
+		csvController.insert(dbName, csvValues);
 	}
-
-	/**
-	 * Executes the given SQL query.
-	 * Note that no result will be returned.
-	 */
-	public void executeSql(String query)
-		throws DatabaseException {
-
-		
-
-		// Connect to the database:
-		try {
-			Connection dbConnection = getConnection();
-			Statement statement = dbConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
-			statement.executeUpdate(query);
-
-			statement.close();
-			dbConnection.close();
-		}
-
-		// Exception handling:
-		catch (SQLException e) {
-			throw new DatabaseException(
-				"SQL Exception: " + e.getMessage());
-		}
-		catch (Exception e) {
-			throw new DatabaseException(
-				"Unexpected Exception: " + e.getMessage());
-		}
+	
+	public void update(CsvValues csvValues) {
+		csvController.update(dbName, csvValues);
+	}
+	
+	public Object find(Object el) throws DatabaseException {
+		throw new DatabaseException("Not implemented");
+	}
+	
+	public boolean exists(Object el) throws DatabaseException {
+		throw new DatabaseException("Not implemented");
 	}
 }

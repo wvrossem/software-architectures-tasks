@@ -18,9 +18,7 @@ public class DatabaseFacade {
 	 * Creates a new database facade.
 	 */
 	public DatabaseFacade(String dbUser, String dbPassword, String dbUrl) {
-		userDb		= new UserDatabase(	dbUser,
-							dbPassword,
-							dbUrl);
+		userDb		= new UserDatabase();
 	}
 
 	/**
