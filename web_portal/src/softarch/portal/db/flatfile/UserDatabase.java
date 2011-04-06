@@ -7,6 +7,7 @@ import softarch.portal.data.ExternalAdministrator;
 import softarch.portal.data.FreeSubscription;
 import softarch.portal.data.Operator;
 import softarch.portal.data.RegularAdministrator;
+import softarch.portal.data.RegularUser;
 import softarch.portal.data.UserProfile;
 
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Date;
 
 /**
  * This class encapsulates the user database.
@@ -24,8 +26,8 @@ public class UserDatabase extends Database {
 	/**
 	 * Creates a new user database.
 	 */
-	public UserDatabase(String dbUser, String dbPassword, String dbUrl) {
-		super(dbUser, dbPassword, dbUrl);
+	public UserDatabase() {
+		super("users");
 	}
 
 	/**
@@ -35,8 +37,7 @@ public class UserDatabase extends Database {
 		throws DatabaseException {
 		
 		UserProfileCsvValues csvValues = new UserProfileCsvValues(profile);
-		// @todo
-		// insert(csvValues);
+		insert(csvValues);
 	}
 
 	/**
@@ -45,139 +46,49 @@ public class UserDatabase extends Database {
 	public void update(UserProfile profile)
 		throws DatabaseException {
 		
-		executeSql(profile.asSqlUpdate());
+		UserProfileCsvValues csvValues = new UserProfileCsvValues(profile);
+		update(csvValues);
 	}
 
 	/**
 	 * Returns the user with the specified username.
 	 */
-	public UserProfile findUser(String username)
-		throws DatabaseException {
-
-		// Connect to the database:
+	public UserProfile findUser(String userName) {
 		try {
-			Statement statement
-				= getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			ResultSet rs;
-			
-			rs = statement.executeQuery(
-				"SELECT * FROM FreeSubscription WHERE " +
-				"Username = \'" + username + "\';");
-			
-			if (rs.first())
-				return new FreeSubscription(rs);
-
-			rs = statement.executeQuery(
-				"SELECT * FROM CheapSubscription WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return new CheapSubscription(rs);
-
-			rs = statement.executeQuery(
-				"SELECT * FROM ExpensiveSubscription WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return new ExpensiveSubscription(rs);
-
-			rs = statement.executeQuery(
-				"SELECT * FROM Operator WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return new Operator(rs);
-
-			rs = statement.executeQuery(
-				"SELECT * FROM ExternalAdministrator WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return new ExternalAdministrator(rs);
-
-			rs = statement.executeQuery(
-				"SELECT * FROM RegularAdministrator WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return new RegularAdministrator(rs);
-
-			rs = statement.executeQuery(
-				"SELECT * FROM ExpertAdministrator WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return new ExpertAdministrator(rs);
-
-			throw new DatabaseException("Invalid username!");
+			return find(userName);
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		// Exception handling:
-		catch (SQLException e) {
-			throw new DatabaseException(
-				"SQL Exception: " + e.getMessage());
-		}
-		catch (ParseException e) {
-			throw new DatabaseException(
-				"Parse Exception: " + e.getMessage());
-		}
+		return null;
 	}
 
 	/**
 	 * Checks whether a user with the specified username exists.
+	 * @throws DatabaseException 
 	 */
-	public boolean userExists(String username)
-		throws DatabaseException {
-
-		// Connect to the database:
-		try {
-
-			Statement statement = getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			ResultSet rs;
-			
-			rs = statement.executeQuery(
-				"SELECT * FROM FreeSubscription WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return true;
-
-			rs = statement.executeQuery(
-				"SELECT * FROM CheapSubscription WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return true;
-
-			rs = statement.executeQuery(
-				"SELECT * FROM ExpensiveSubscription WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return true;
-
-			rs = statement.executeQuery(
-				"SELECT * FROM Operator WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return true;
-
-			rs = statement.executeQuery(
-				"SELECT * FROM ExternalAdministrator WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return true;
-
-			rs = statement.executeQuery(
-				"SELECT * FROM RegularAdministrator WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return true;
-
-			rs = statement.executeQuery(
-				"SELECT * FROM ExpertAdministrator WHERE " +
-				"Username = \'" + username + "\';");
-			if (rs.first())
-				return true;
-
-			return false;
-		}
-
-		// Exception handling:
-		catch (SQLException e) {
-			throw new DatabaseException(
-				"SQL Exception: " + e.getMessage());
-		}
+	public boolean userExists(String userName) throws DatabaseException {
+		return exists(userName);
 	}
+
+	public UserProfile find(String userName) throws DatabaseException {
+		CsvValues csvValues = csvController.find(dbName, "UserName", userName);
+		
+		// TODO Check subscription type
+		UserProfile userProfile = new CheapSubscription(
+				(String) csvValues.get(0), 
+				(String) csvValues.get(1), 
+				(String) csvValues.get(2), 
+				(String) csvValues.get(3), 
+				(String) csvValues.get(4), 
+				(Date) csvValues.get(5));
+		
+		return userProfile;
+	}
+
+	public boolean exists(String userName) throws DatabaseException {
+		return csvController.exists(dbName, "UserName", userName);
+	}
+	
+	
 }
