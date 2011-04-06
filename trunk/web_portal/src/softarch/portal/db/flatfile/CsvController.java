@@ -28,18 +28,16 @@ public class CsvController {
 	
 	public void createDatabase(String database, String[] fieldnames) throws FlatFileDatabaseException {
 		try {
-			if(databaseExisits(database)) {
-				throw new FlatFileDatabaseException("Database already exists");
+			if(!databaseExisits(database)) {
+				CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');
+				
+				for(String fieldname : fieldnames) {
+					csvOutput.write(fieldname);
+				}
+				csvOutput.endRecord();
+				
+				csvOutput.close();
 			}
-			
-			CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');
-			
-			for(String fieldname : fieldnames) {
-				csvOutput.write(fieldname);
-			}
-			csvOutput.endRecord();
-			
-			csvOutput.close();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
