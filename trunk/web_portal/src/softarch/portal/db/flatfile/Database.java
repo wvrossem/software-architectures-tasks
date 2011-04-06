@@ -28,21 +28,10 @@ public class Database {
 	
 	public void insert(CsvValues csvValues) throws FlatFileDatabaseException {
 		throw new FlatFileDatabaseException("Not implemented");
-		/*try {
-			csvController.insert(dbName, csvValues);
-		} catch (FlatFileDatabaseException e) {
-			System.out.println(e.getMessage());
-		}*/
 	}
 	
 	public void update(CsvValues csvValues) throws FlatFileDatabaseException {
 		throw new FlatFileDatabaseException("Not implemented");
-		/*try {
-			csvController.update(dbName, csvValues);
-		} catch (FlatFileDatabaseException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		}*/
 	}
 	
 	public Object find(Object el) throws FlatFileDatabaseException {
