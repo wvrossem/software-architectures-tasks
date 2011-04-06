@@ -3,11 +3,11 @@ package softarch.portal.db.sql;
 /**
  * @author Niels Joncheere
  */
-public class DatabaseException extends Exception {
+public class SQLDatabaseException extends Exception {
 	/**
 	 * Creates a new database exception.
 	 */
-	public DatabaseException(String message) {
+	public SQLDatabaseException(String message) {
 		super(message);
 	}
 }

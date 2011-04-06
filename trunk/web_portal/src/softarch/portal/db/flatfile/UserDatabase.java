@@ -43,7 +43,7 @@ public class UserDatabase extends Database {
 		
 		try {
 			csvController.createDatabase("users", fieldnames);
-		} catch (DatabaseException e) {
+		} catch (FlatFileDatabaseException e) {
 			
 		}
 	}
@@ -70,7 +70,7 @@ public class UserDatabase extends Database {
 	public UserProfile findUser(String userName) {
 		try {
 			return find(userName);
-		} catch (DatabaseException e) {
+		} catch (FlatFileDatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
@@ -82,13 +82,13 @@ public class UserDatabase extends Database {
 
 	/**
 	 * Checks whether a user with the specified username exists.
-	 * @throws DatabaseException 
+	 * @throws FlatFileDatabaseException 
 	 */
-	public boolean userExists(String userName) throws DatabaseException {
+	public boolean userExists(String userName) throws FlatFileDatabaseException {
 		return exists(userName);
 	}
 
-	public UserProfile find(String userName) throws DatabaseException, ParseException {
+	public UserProfile find(String userName) throws FlatFileDatabaseException, ParseException {
 		CsvValues csvValues = csvController.find(dbName, "UserName", userName);
 		
 		// TODO Check subscription type
@@ -105,7 +105,7 @@ public class UserDatabase extends Database {
 		return userProfile;
 	}
 
-	public boolean exists(String userName) throws DatabaseException {
+	public boolean exists(String userName) throws FlatFileDatabaseException {
 		return csvController.exists(dbName, "UserName", userName);
 	}
 	

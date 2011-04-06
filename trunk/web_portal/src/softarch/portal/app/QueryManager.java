@@ -1,7 +1,8 @@
 package softarch.portal.app;
 
-import softarch.portal.db.sql.DatabaseException;
-import softarch.portal.db.sql.DatabaseFacade;
+import softarch.portal.db.DatabaseFacade;
+import softarch.portal.db.sql.SQLDatabaseException;
+import softarch.portal.db.sql.SQLDatabaseFacade;
 
 import java.util.List;
 import java.util.Date;
@@ -35,7 +36,7 @@ public class QueryManager extends Manager {
 		try {
 			return dbFacade.findRecords(informationType, queryString);
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -55,7 +56,7 @@ public class QueryManager extends Manager {
 		try {
 			return dbFacade.findRecordsFrom(informationType, date);
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {

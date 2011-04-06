@@ -15,9 +15,9 @@ public class CsvController {
 		return new File(database+".csv").exists();
 	}
 	
-	public void createDatabase(String database, String[] fieldnames) throws DatabaseException {
+	public void createDatabase(String database, String[] fieldnames) throws FlatFileDatabaseException {
 		try {
-			if ( databaseExisits(database) ) throw new DatabaseException("Database already exists");
+			if ( databaseExisits(database) ) throw new FlatFileDatabaseException("Database already exists");
 			
 			CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');
 			
@@ -33,12 +33,12 @@ public class CsvController {
 		}
 	}
 	
-	public void insert(String database, CsvValues csvValues) throws DatabaseException {
+	public void insert(String database, CsvValues csvValues) throws FlatFileDatabaseException {
 		try {
-			if ( !databaseExisits(database) ) throw new DatabaseException("Database does not exist");
+			if ( !databaseExisits(database) ) throw new FlatFileDatabaseException("Database does not exist");
 			
 			if ( exists(database, "UserName", (String)csvValues.get(0)) ) {
-				throw new DatabaseException("Record already exists.");
+				throw new FlatFileDatabaseException("Record already exists.");
 			} else {
 
 				CsvWriter csvOutput = new CsvWriter(new FileWriter(database+".csv", true), ',');
@@ -58,20 +58,20 @@ public class CsvController {
 		}
 	}
 	
-	public void update(String database, CsvValues csvValues) throws DatabaseException {
-		if ( !databaseExisits(database) ) throw new DatabaseException("Database does not exist");
+	public void update(String database, CsvValues csvValues) throws FlatFileDatabaseException {
+		if ( !databaseExisits(database) ) throw new FlatFileDatabaseException("Database does not exist");
 		
 		if ( exists(database, "UserName", (String)csvValues.get(0)) ) {
 			// TODO implement update
-			throw new DatabaseException("Record exists.");
+			throw new FlatFileDatabaseException("Record exists.");
 		} else {
-			throw new DatabaseException("Record does not exist");
+			throw new FlatFileDatabaseException("Record does not exist");
 		} 
 	}
 	
 	public CsvValues find(String database, String fieldName, String value) {
 		try {
-			if ( !databaseExisits(database) ) throw new DatabaseException("Database does not exist");
+			if ( !databaseExisits(database) ) throw new FlatFileDatabaseException("Database does not exist");
 			
 			CsvReader db = new CsvReader(database+".csv");
 			
@@ -96,7 +96,7 @@ public class CsvController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (DatabaseException e) {
+		} catch (FlatFileDatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -106,7 +106,7 @@ public class CsvController {
 	
 	public boolean exists(String database, String fieldName, String value) {
 		try {
-			if ( !databaseExisits(database) ) throw new DatabaseException("Database does not exist");
+			if ( !databaseExisits(database) ) throw new FlatFileDatabaseException("Database does not exist");
 			
 			CsvReader db = new CsvReader(database+".csv");
 			
@@ -124,7 +124,7 @@ public class CsvController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (DatabaseException e) {
+		} catch (FlatFileDatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

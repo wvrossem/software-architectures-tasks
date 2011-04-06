@@ -38,7 +38,7 @@ public class RegularDatabase extends Database {
 	 * that match the given query string.
 	 */
 	public List findRecords(String informationType, String queryString)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		queryString = "%" + queryString + "%";
 		
@@ -81,22 +81,22 @@ public class RegularDatabase extends Database {
 						result.add(new InterestingWebsite(rs));
 					return result;
 				default:
-					throw new DatabaseException(
+					throw new SQLDatabaseException(
 						"Invalid information type!");
 			}
 		}
 
 		// Exception handling:
 		catch (ParseException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"Parse Exception: " + e.getMessage());
 		}
 		catch (SQLException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"SQL Exception: " + e.getMessage());
 		}
 		catch (Exception e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"The regular database has caught an " +
 				"unexpected exception: " + e.getMessage());
 		}
@@ -107,7 +107,7 @@ public class RegularDatabase extends Database {
 	 * that were added after the given date.
 	 */
 	public List findRecordsFrom(String informationType, Date date)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		// Connect to the database:
 		try {
@@ -155,22 +155,22 @@ public class RegularDatabase extends Database {
 						result.add(new InterestingWebsite(rs));
 					return result;
 				default:
-					throw new DatabaseException(
+					throw new SQLDatabaseException(
 						"Invalid information type!");
 			}
 		}
 
 		// Exception handling:
 		catch (ParseException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"Parse Exception: " + e.getMessage());
 		}
 		catch (SQLException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"SQL Exception: " + e.getMessage());
 		}
 		catch (Exception e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"The regular database has caught an " +
 				"unexpected exception: " + e.getMessage());
 		}
@@ -180,7 +180,7 @@ public class RegularDatabase extends Database {
 	 * Adds a new regular data object to the regular database.
 	 */
 	public void add(RegularData rd)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 		
 		executeSql(rd.asSql());
 	}
@@ -190,7 +190,7 @@ public class RegularDatabase extends Database {
 	 * regular database.
 	 */
 	public int getNumberOfRegularRecords(String informationType)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		// Connect to the database:
 		try {
@@ -204,11 +204,11 @@ public class RegularDatabase extends Database {
 
 		// Exception handling:
 		catch (SQLException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"SQL Exception: " + e.getMessage());
 		}
 		catch (Exception e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"The regular database has caught an " +
 				"unexpected exception: " + e.getMessage());
 		}

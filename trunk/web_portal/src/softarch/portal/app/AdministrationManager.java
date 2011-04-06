@@ -2,8 +2,9 @@ package softarch.portal.app;
 
 import softarch.portal.data.RawData;
 import softarch.portal.data.RegularData;
-import softarch.portal.db.sql.DatabaseException;
-import softarch.portal.db.sql.DatabaseFacade;
+import softarch.portal.db.DatabaseFacade;
+import softarch.portal.db.sql.SQLDatabaseException;
+import softarch.portal.db.sql.SQLDatabaseFacade;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class AdministrationManager extends Manager {
 		try {
 			dbFacade.add(rd);
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -53,7 +54,7 @@ public class AdministrationManager extends Manager {
 		try {
 			return dbFacade.getRawData();
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -72,7 +73,7 @@ public class AdministrationManager extends Manager {
 		try {
 			return dbFacade.getRawData(id);
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -93,7 +94,7 @@ public class AdministrationManager extends Manager {
 		try {
 			dbFacade.addRawData(rd);
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -113,7 +114,7 @@ public class AdministrationManager extends Manager {
 		try {
 			dbFacade.deleteRawData(rd);
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -133,7 +134,7 @@ public class AdministrationManager extends Manager {
 		try {
 			dbFacade.updateRawData(rd);
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {

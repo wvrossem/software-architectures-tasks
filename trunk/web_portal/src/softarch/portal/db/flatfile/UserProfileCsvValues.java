@@ -15,12 +15,12 @@ public class UserProfileCsvValues extends CsvValues {
 		Date.class
 	};
 	
-	UserProfileCsvValues(Object[] values) throws DatabaseException {
+	UserProfileCsvValues(Object[] values) throws FlatFileDatabaseException {
 		super(values);
 		
 		for (int i = 0; i<values.length; i++) {
 			if (!values[i].getClass().equals(types[i]) ) {
-				throw new DatabaseException("Type mismatch");
+				throw new FlatFileDatabaseException("Type mismatch");
 			}
 		}
 	}

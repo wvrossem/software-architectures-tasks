@@ -3,8 +3,10 @@ package softarch.portal.app;
 import java.util.Map;
 
 import softarch.portal.data.UserProfile;
-import softarch.portal.db.sql.DatabaseException;
-import softarch.portal.db.sql.DatabaseFacade;
+import softarch.portal.db.DatabaseFacade;
+import softarch.portal.db.flatfile.FlatFileDatabaseException;
+import softarch.portal.db.sql.SQLDatabaseException;
+import softarch.portal.db.sql.SQLDatabaseFacade;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -64,13 +66,13 @@ public class UserManager extends Manager {
 		try {
 			String username = profile.getUsername();
 			if (dbFacade.userExists(username))
-				throw new DatabaseException(
+				throw new SQLDatabaseException(
 					"The username \"" + username + "\" " +
 					"is already taken!");
 			else
 				dbFacade.insert(profile);
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -89,7 +91,7 @@ public class UserManager extends Manager {
 		try {
 			return dbFacade.findUser(username);
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -191,8 +193,11 @@ public class UserManager extends Manager {
 					"The user \"" + username + "\" is " +
 					"not logged in!");
 		}
-		catch (DatabaseException e) {
+		catch (SQLDatabaseException e) {
 			throw new ApplicationException(e.getMessage());
+		} catch (FlatFileDatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

@@ -32,19 +32,19 @@ public class Database {
 	 * Executes the given SQL queries.
 	 */
 	public void executeSql(List queries)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		for (Iterator i = queries.iterator(); i.hasNext(); )
 			executeSql((String) i.next());
 	}
 	
-	public Connection getConnection() throws DatabaseException, SQLException {
+	public Connection getConnection() throws SQLDatabaseException, SQLException {
 		// Load the HyperSQL JDBC driver:
 		try {
 			Class.forName("org.hsqldb.jdbcDriver").newInstance();
 		}
 		catch (Exception e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"Unable to load the HyperSQL JDBC driver!");
 		}
 		
@@ -61,7 +61,7 @@ public class Database {
 	 * Note that no result will be returned.
 	 */
 	public void executeSql(String query)
-		throws DatabaseException {
+		throws SQLDatabaseException {
 
 		
 
@@ -78,11 +78,11 @@ public class Database {
 
 		// Exception handling:
 		catch (SQLException e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"SQL Exception: " + e.getMessage());
 		}
 		catch (Exception e) {
-			throw new DatabaseException(
+			throw new SQLDatabaseException(
 				"Unexpected Exception: " + e.getMessage());
 		}
 	}
