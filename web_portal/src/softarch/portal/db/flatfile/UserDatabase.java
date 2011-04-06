@@ -100,24 +100,48 @@ public class UserDatabase extends Database {
 	 * @throws FlatFileDatabaseException 
 	 */
 	public UserProfile findUser(String userName) throws FlatFileDatabaseException {
-		List<UserProfile> result;
+		// We need to look at the last version of the results returned by the different select calls ...
+		// As this application doesn't support deletion of an account,
+		//  we can assume that once a profile is present, the account is still valid
+		// To support deletion, eighter purge the csv file of all records for that specific profile (time costly),
+		//  or add for example a record with username and null values for that profile, and look for that here
 		
-		result = csvController.selectProfileWithUsername(dbFreeSubscription, userName);
-		if(!result.isEmpty()) {
-			return result.get(result.size() - 1); // return the current version
+		List<UserProfile> results;
+		UserProfile result = null;
+		UserProfile latest = null;
+		
+		results = csvController.selectProfileWithUsername(dbFreeSubscription, userName);
+		if(!results.isEmpty()) {
+			result = results.get(results.size() - 1); // return the current version
+			
+			latest = result;
 		}
 		
-		result = csvController.selectProfileWithUsername(dbCheapSubscription, userName);
-		if(!result.isEmpty()) {
-			return result.get(result.size() - 1); // return the current version
+		results = csvController.selectProfileWithUsername(dbCheapSubscription, userName);
+		if(!results.isEmpty()) {
+			result = results.get(results.size() - 1); // return the current version
+			if(latest == null) {
+				latest = result;
+			} else if(latest.getLastLogin().before(result.getLastLogin())) {
+				latest = result;
+			}
 		}
 		
-		result = csvController.selectProfileWithUsername(dbExpensiveSubscription, userName);
-		if(!result.isEmpty()) {
-			return result.get(result.size() - 1); // return the current version
+		results = csvController.selectProfileWithUsername(dbExpensiveSubscription, userName);
+		if(!results.isEmpty()) {
+			result = results.get(results.size() - 1); // return the current version
+			if(latest == null) {
+				latest = result;
+			} else if(latest.getLastLogin().before(result.getLastLogin())) {
+				latest = result;
+			}
 		}
 		
-		throw new FlatFileDatabaseException("Invalid username!");
+		if(latest == null) {
+			throw new FlatFileDatabaseException("Invalid username!");
+		}
+		
+		return latest;
 	}
 
 	/**
@@ -125,20 +149,27 @@ public class UserDatabase extends Database {
 	 * @throws FlatFileDatabaseException 
 	 */
 	public boolean userExists(String userName) throws FlatFileDatabaseException {
-		List<UserProfile> result;
+		// As this application doesn't support deletion of an account,
+		//  we can assume that once a profile is present, the account is still valid
+		// To support deletion, eighter purge the csv file of all records for that specific profile (time costly),
+		//  or add for example a record with username and null values for that profile, and look for that here
+		//  ! keep the last logged values so when we recreate an account with a previously used account we don't
+		//   fail to access the account.
 		
-		result = csvController.selectProfileWithUsername(dbFreeSubscription, userName);
-		if(!result.isEmpty()) {
+		List<UserProfile> results;
+		
+		results = csvController.selectProfileWithUsername(dbFreeSubscription, userName);
+		if(!results.isEmpty()) {
 			return true;
 		}
 		
-		result = csvController.selectProfileWithUsername(dbCheapSubscription, userName);
-		if(!result.isEmpty()) {
+		results = csvController.selectProfileWithUsername(dbCheapSubscription, userName);
+		if(!results.isEmpty()) {
 			return true;
 		}
 		
-		result = csvController.selectProfileWithUsername(dbExpensiveSubscription, userName);
-		if(!result.isEmpty()) {
+		results = csvController.selectProfileWithUsername(dbExpensiveSubscription, userName);
+		if(!results.isEmpty()) {
 			return true;
 		}
 		
