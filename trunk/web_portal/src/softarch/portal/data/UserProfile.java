@@ -7,7 +7,8 @@ import java.util.Date;
  * @author Niels Joncheere
  */
 public abstract class UserProfile extends Data {
-	// MODIFIED
+	
+	// MODIFIED by Wouter & Ken
 	public String getFirstName() {
 		return firstName;
 	}
@@ -57,6 +58,7 @@ public abstract class UserProfile extends Data {
 	 */
 	public abstract String asSqlUpdate();
 
+	// MODIFIED by Wouter & Ken
 	public String getUsername() {
 		return username;
 	}

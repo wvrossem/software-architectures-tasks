@@ -17,6 +17,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.Transformer;
 import java.io.FileInputStream;
 
+import softarch.portal.app.ApplicationException;
 import softarch.portal.app.ApplicationFacade;
 
 /**
@@ -150,6 +151,9 @@ public class InternetFrontEnd extends HttpServlet {
 			// This exception will be thrown when the servlet
 			// cannot access the configuration file.  The behaviour
 			// of the servlet is undefined in this case.
+		} catch (ApplicationException e) { // MODIFIED by Wouter & Ken
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

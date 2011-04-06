@@ -2,6 +2,7 @@ package softarch.portal.app;
 
 import softarch.portal.data.RawData;
 import softarch.portal.data.RegularData;
+import softarch.portal.db.DatabaseException;
 import softarch.portal.db.DatabaseFacade;
 import softarch.portal.db.sql.SQLDatabaseException;
 import softarch.portal.db.sql.SQLDatabaseFacade;
@@ -34,7 +35,7 @@ public class AdministrationManager extends Manager {
 		try {
 			dbFacade.add(rd);
 		}
-		catch (SQLDatabaseException e) {
+		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -54,7 +55,7 @@ public class AdministrationManager extends Manager {
 		try {
 			return dbFacade.getRawData();
 		}
-		catch (SQLDatabaseException e) {
+		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -73,7 +74,7 @@ public class AdministrationManager extends Manager {
 		try {
 			return dbFacade.getRawData(id);
 		}
-		catch (SQLDatabaseException e) {
+		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -94,7 +95,7 @@ public class AdministrationManager extends Manager {
 		try {
 			dbFacade.addRawData(rd);
 		}
-		catch (SQLDatabaseException e) {
+		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -114,7 +115,7 @@ public class AdministrationManager extends Manager {
 		try {
 			dbFacade.deleteRawData(rd);
 		}
-		catch (SQLDatabaseException e) {
+		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
@@ -134,7 +135,7 @@ public class AdministrationManager extends Manager {
 		try {
 			dbFacade.updateRawData(rd);
 		}
-		catch (SQLDatabaseException e) {
+		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());
 		}
 		catch (Exception e) {
