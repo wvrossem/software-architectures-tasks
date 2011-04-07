@@ -8,27 +8,30 @@ import java.util.Date;
  * @author Niels Joncheere
  */
 public abstract class RegularData extends Data {
-	protected Date dateAdded;
+	public Date dateAdded;
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add the
 	 * regular data object to a relational database.
 	 */
-	public abstract String asSql();
+	//public abstract String asSql();
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add a
 	 * <code>RawData</code> object with a <code>RegularData</code>
 	 * structure to a relational database.
 	 * @see softarch.portal.data.RawData
 	 */
-	public abstract String asSql(RawData rd);
+	//public abstract String asSql(RawData rd);
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL DELETE string that allows the system to delete a
 	 * <code>RawData</code> object with a <code>RegularData</code>
 	 * structure from a relational database.
 	 * @see softarch.portal.data.RawData
 	 */
-	public abstract String asSqlDelete(RawData rd);
+	//public abstract String asSqlDelete(RawData rd);
 }

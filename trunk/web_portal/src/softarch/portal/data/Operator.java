@@ -63,11 +63,12 @@ public class Operator extends UserProfile {
 			"</Operator>";
 	}
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add
 	 * the account to a relational database.
 	 */
-	public String asSql() {
+	/*public String asSql() {
 		return	"INSERT INTO Operator (Username, Password, " +
 			"FirstName, LastName, EmailAddress, LastLogin) " +
 			"VALUES (\'" + normalizeSql(username) + "\', \'" +
@@ -76,7 +77,7 @@ public class Operator extends UserProfile {
 			normalizeSql(lastName) + "\', \'" +
 			normalizeSql(emailAddress) + "\', \'" +
 			df.format(lastLogin) + "\');";
-	}
+	}*/
 
 	/**
 	 * When an operator has logged in successfully, he will be
@@ -86,11 +87,12 @@ public class Operator extends UserProfile {
 		return "web_portal?Page=Operation";
 	}
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL UPDATE string that allows the system to update
 	 * the account in a relational database.
 	 */
-	public String asSqlUpdate() {
+	/*public String asSqlUpdate() {
 		return  "UPDATE Operator SET Password = \'" + 
 			normalizeSql(password) + "\', FirstName = \'" +
 			normalizeSql(firstName) + "\', LastName = \'" +
@@ -98,5 +100,5 @@ public class Operator extends UserProfile {
 			normalizeSql(emailAddress) + "\', LastLogin = \'" +
 			df.format(lastLogin) + "\' " + "WHERE Username = \'" +
 			normalizeSql(username) + "\';";
-	}
+	}*/
 }

@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletRequest;
  * @author Niels Joncheere
  */
 public class Report extends RegularData {
-	private String	author;
-	private Date	publicationDate;
-	private String	review;
-	private String	summary;
-	private String	title;
+	public String	author;
+	public Date	publicationDate;
+	public String	review;
+	public String	summary;
+	public String	title;
 
 	/**
 	 * Creates a new report.
@@ -83,11 +83,12 @@ public class Report extends RegularData {
 			"</Report>";
 	}
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add the
 	 * report to a relational database.
 	 */
-	public String asSql() {
+	/*public String asSql() {
 		return	"INSERT INTO Report (DateAdded, Author, " +
 			"PublicationDate, Review, Summary, Title) VALUES (\'" +
 			df.format(dateAdded) + "\', \'" + normalizeSql(author) +
@@ -95,15 +96,16 @@ public class Report extends RegularData {
 			normalizeSql(review) + "\', \'" +
 			normalizeSql(summary) + "\', \'" + normalizeSql(title) +
 			"\');";
-	}
+	}*/
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add a
 	 * <code>RawData</code> object with a <code>Report</code>
 	 * structure to a relational database.
 	 * @see softarch.portal.data.RawData
 	 */
-	public String asSql(RawData rd) {
+	/*public String asSql(RawData rd) {
 		return	"INSERT INTO RawReport (ID, DateAdded, Author, " +
 			"PublicationDate, Review, Summary, Title) VALUES (" +
 			rd.getId() + ", \'" + df.format(dateAdded) + "\', \'" +
@@ -112,15 +114,16 @@ public class Report extends RegularData {
 			normalizeSql(review) + "\', \'" +
 			normalizeSql(summary) + "\', \'" + normalizeSql(title) +
 			"\');";
-	}
+	}*/
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL DELETE string that allows the system to delete a
 	 * <code>RawData</code> object with a <code>Report</code>
 	 * structure from a relational database.
 	 * @see softarch.portal.data.RawData
 	 */
-	public String asSqlDelete(RawData rd) {
+	/*public String asSqlDelete(RawData rd) {
 		return "DELETE FROM RawReport WHERE ID = " + rd.getId() + ";";
-	}
+	}*/
 }

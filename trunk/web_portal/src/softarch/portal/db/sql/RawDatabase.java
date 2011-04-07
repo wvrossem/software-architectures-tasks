@@ -250,7 +250,7 @@ public class RawDatabase extends Database {
 
 		int id = getNewId();
 		RawData rawData = new RawData(id, regularData);
-		executeSql(rawData.asSql());
+		executeSql(asSqlRawData(rawData)); // MODIFIED by Wouter & Ken
 	}
 
 	/**
@@ -276,7 +276,7 @@ public class RawDatabase extends Database {
 		throws SQLDatabaseException {
 
 		deleteRawData(rd);
-		executeSql(rd.asSql());
+		executeSql(asSqlRawData(rd)); // MODIFIED by Wouter & Ken
 	}
 
 	/**

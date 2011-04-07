@@ -1,3 +1,6 @@
+
+// ADDED by Wouter & Ken
+
 package softarch.portal.db;
 
 public class DatabaseException extends Exception {

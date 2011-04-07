@@ -29,7 +29,7 @@ public class TestRegularData {
 				"Building the Semantic Web");
 		System.out.println(book.asXml());
 		System.out.println();
-		System.out.println(book.asSql());
+		//System.out.println(book.asSql()); // MODIFIED by Wouter & Ken
 		System.out.println();
 
 		Article article
@@ -44,7 +44,7 @@ public class TestRegularData {
 				"Design Changes");
 		System.out.println(article.asXml());
 		System.out.println();
-		System.out.println(article.asSql());
+		//System.out.println(article.asSql()); // MODIFIED by Wouter & Ken
 		System.out.println();
 
 		try {
@@ -56,7 +56,7 @@ public class TestRegularData {
 					new URL("http://www.joncheere.be/"));
 			System.out.println(softwareRepository.asXml());
 			System.out.println();
-			System.out.println(softwareRepository.asSql());
+			//System.out.println(softwareRepository.asSql()); // MODIFIED by Wouter & Ken
 		}
 		catch (MalformedURLException e) {
 			System.out.println(

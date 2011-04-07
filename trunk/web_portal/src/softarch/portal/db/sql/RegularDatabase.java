@@ -182,7 +182,19 @@ public class RegularDatabase extends Database {
 	public void add(RegularData rd)
 		throws SQLDatabaseException {
 		
-		executeSql(rd.asSql());
+		if(rd instanceof Article) {
+			executeSql(asSqlArticle((Article)rd));
+		} else if(rd instanceof Book) {
+			executeSql(asSqlBook((Book)rd));
+		} else if(rd instanceof Conference) {
+			executeSql(asSqlConference((Conference)rd));
+		} else if(rd instanceof InterestingWebsite) {
+			executeSql(asSqlInterestingWebsite((InterestingWebsite)rd));
+		} else if(rd instanceof Report) {
+			executeSql(asSqlReport((Report)rd));
+		} else if(rd instanceof SoftwareRepository) {
+			executeSql(asSqlSoftwareRepository((SoftwareRepository)rd));
+		}
 	}
 
 	/**

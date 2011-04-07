@@ -33,18 +33,19 @@ public abstract class UserProfile extends Data {
 		this.emailAddress = emailAddress;
 	}
 
-	protected	String	username;
-	protected	String	password;
-	protected	String	firstName;
-	protected	String	lastName;
-	protected	String	emailAddress;
-	protected	Date	lastLogin;
+	public	String	username;
+	public	String	password;
+	public	String	firstName;
+	public	String	lastName;
+	public	String	emailAddress;
+	public	Date	lastLogin;
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL string that allows the system to add the account
 	 * to a relational database.
 	 */
-	public abstract String asSql();
+	//public abstract String asSql();
 
 	/**
 	 * When a user has logged in successfully, he will be
@@ -52,11 +53,12 @@ public abstract class UserProfile extends Data {
 	 */
 	public abstract String getDefaultPage();
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL UPDATE string that allows the system to update
 	 * the account in a relational database.
 	 */
-	public abstract String asSqlUpdate();
+	//public abstract String asSqlUpdate();
 
 	// MODIFIED by Wouter & Ken
 	public String getUsername() {

@@ -78,11 +78,12 @@ public class FreeSubscription extends RegularUser {
 			"</FreeSubscription>";
 	}
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add
 	 * the account to a relational database.
 	 */
-	public String asSql() {
+	/*public String asSql() {
 		return	"INSERT INTO FreeSubscription (Username, Password, " +
 			"FirstName, LastName, EmailAddress, LastLogin) " +
 			"VALUES (\'" + normalizeSql(username) + "\', \'" +
@@ -91,13 +92,14 @@ public class FreeSubscription extends RegularUser {
 			normalizeSql(lastName) + "\', \'" +
 			normalizeSql(emailAddress) + "\', \'" +
 			df.format(lastLogin) + "\');";
-	}
+	}*/
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL UPDATE string that allows the system to update
 	 * the account in a relational database.
 	 */
-	public String asSqlUpdate() {
+	/*public String asSqlUpdate() {
 		return	"UPDATE FreeSubscription SET Password = \'" +
 			normalizeSql(password) + "\', FirstName = \'" +
 			normalizeSql(firstName) + "\', LastName = \'" +
@@ -105,5 +107,5 @@ public class FreeSubscription extends RegularUser {
 			normalizeSql(emailAddress) + "\', LastLogin = \'" +
 			df.format(lastLogin) + "\' " + "WHERE Username = \'" +
 			normalizeSql(username) + "\';";
-	}
+	}*/
 }

@@ -9,9 +9,9 @@ import java.util.Vector;
  * @author Niels Joncheere
  */
 public class RawData extends Data {
-	private int		id;
-	private String		source;
-	private RegularData	structure;
+	public int		id;
+	public String		source;
+	public RegularData	structure;
 
 	/**
 	 * Creates a new <i>raw data</i> object.
@@ -63,11 +63,12 @@ public class RawData extends Data {
 		return result;
 	}
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add the
 	 * <i>raw data</i> object to a relational database.
 	 */
-	public List asSql() {
+	/*public List asSql() {
 		List queries = new Vector();
 		// The following check could be avoided by using a dummy
 		// structure (whose asSql method returns the SQL INSERT
@@ -79,13 +80,14 @@ public class RawData extends Data {
 			queries.add(structure.asSql(this));
 		}
 		return queries;
-	}
+	}*/
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL DELETE string that allows the system to delete the
 	 * <i>raw data</i> object from a relational database.
 	 */
-	public String asSqlDelete() {
+	/*public String asSqlDelete() {
 		// The following check could be avoided by using a dummy
 		// structure (whose asSqlDelete method returns the SQL DELETE
 		// string below) until the raw data object is structured.
@@ -93,5 +95,5 @@ public class RawData extends Data {
 			return "DELETE FROM Raw WHERE ID = " + id + ";";
 		else
 			return structure.asSqlDelete(this);
-	}
+	}*/
 }

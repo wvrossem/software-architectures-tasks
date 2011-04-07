@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletRequest;
  * @author Niels Joncheere
  */
 public class Conference extends RegularData {
-	private Date	date;
-	private String	location;
-	private String	name;
-	private String	review;
-	private String	summary;
-	private URL	url;
+	public Date	date;
+	public String	location;
+	public String	name;
+	public String	review;
+	public String	summary;
+	public URL	url;
 
 	/**
 	 * Creates a new conference.
@@ -89,11 +89,12 @@ public class Conference extends RegularData {
 			"</Conference>";
 	}
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add the
 	 * conference to a relational database.
 	 */
-	public String asSql() {
+	/*public String asSql() {
 		return	"INSERT INTO Conference (DateAdded, Date, Location, " +
 			"Name, Review, Summary, URL) VALUES (\'" +
 			df.format(dateAdded) + "\', \'" + df.format(date) +
@@ -101,15 +102,16 @@ public class Conference extends RegularData {
 			normalizeSql(name) + "\', \'" + normalizeSql(review) +
 			"\', \'" + normalizeSql(summary) + "\', \'" +
 			normalizeSql(url.toString()) + "\');";
-	}
+	}*/
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add a
 	 * <code>RawData</code> object with a <code>Conference</code>
 	 * structure to a relational database.
 	 * @see softarch.portal.data.RawData
 	 */
-	public String asSql(RawData rd) {
+	/*public String asSql(RawData rd) {
 		return	"INSERT INTO RawConference (ID, DateAdded, Date, " +
 			"Location, Name, Review, Summary, URL) VALUES (" +
 			rd.getId() + ", \'" +
@@ -118,16 +120,17 @@ public class Conference extends RegularData {
 			normalizeSql(name) + "\', \'" + normalizeSql(review) +
 			"\', \'" + normalizeSql(summary) + "\', \'" +
 			normalizeSql(url.toString()) + "\');";
-	}
+	}*/
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL DELETE string that allows the system to delete a
 	 * <code>RawData</code> object with a <code>Conference</code>
 	 * structure from a relational database.
 	 * @see softarch.portal.data.RawData
 	 */
-	public String asSqlDelete(RawData rd) {
+	/*public String asSqlDelete(RawData rd) {
 		return	"DELETE FROM RawConference WHERE ID = " + rd.getId() +
 			";";
-	}
+	}*/
 }
