@@ -18,7 +18,7 @@ public class TestUserProfile {
 				"Joncheere",
 				"niels@joncheere.be",
 				new Date());
-		System.out.println(ea.asSql());
+		//System.out.println(ea.asSql()); // MODIFIED by Wouter & Ken
 		System.out.println();
 		System.out.println(ea.getDefaultPage());
 	}

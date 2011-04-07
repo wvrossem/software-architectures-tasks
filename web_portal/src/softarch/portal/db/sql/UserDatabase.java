@@ -34,9 +34,21 @@ public class UserDatabase extends Database {
 	public void insert(UserProfile profile)
 		throws SQLDatabaseException {
 		
-		executeSql(profile.asSql());
-		//List p = profile.asList(); + type of profile ...
-		// executeSql(INSERT ... P1 P2 ... type of profile)
+		if(profile instanceof CheapSubscription) {
+			executeSql(asSqlCheapSubscription((CheapSubscription)profile));
+		} else if(profile instanceof ExpensiveSubscription) {
+			executeSql(asSqlExpensiveSubscription((ExpensiveSubscription)profile));
+		} else if(profile instanceof ExpertAdministrator) {
+			executeSql(asSqlExpertAdministrator((ExpertAdministrator)profile));
+		} else if(profile instanceof FreeSubscription) {
+			executeSql(asSqlFreeSubscription((FreeSubscription)profile));
+		} else if(profile instanceof Operator) {
+			executeSql(asSqlOperator((Operator)profile));
+		} else if(profile instanceof RegularAdministrator) {
+			executeSql(asSqlRegularAdministrator((RegularAdministrator)profile));
+		} else if(profile instanceof ExternalAdministrator) {
+			executeSql(asSqlExternalAdministrator((ExternalAdministrator)profile));
+		}
 	}
 
 	/**
@@ -45,7 +57,21 @@ public class UserDatabase extends Database {
 	public void update(UserProfile profile)
 		throws SQLDatabaseException {
 		
-		executeSql(profile.asSqlUpdate());
+		if(profile instanceof CheapSubscription) {
+			executeSql(asSqlUpdateCheapSubscription((CheapSubscription)profile));
+		} else if(profile instanceof ExpensiveSubscription) {
+			executeSql(asSqlUpdateExpensiveSubscription((ExpensiveSubscription)profile));
+		} else if(profile instanceof ExpertAdministrator) {
+			executeSql(asSqlUpdateExpertAdministrator((ExpertAdministrator)profile));
+		} else if(profile instanceof FreeSubscription) {
+			executeSql(asSqlUpdateFreeSubscription((FreeSubscription)profile));
+		} else if(profile instanceof Operator) {
+			executeSql(asSqlUpdateOperator((Operator)profile));
+		} else if(profile instanceof RegularAdministrator) {
+			executeSql(asSqlUpdateRegularAdministrator((RegularAdministrator)profile));
+		} else if(profile instanceof ExternalAdministrator) {
+			executeSql(asSqlUpdateExternalAdministrator((ExternalAdministrator)profile));
+		}
 	}
 
 	/**

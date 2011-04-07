@@ -12,7 +12,7 @@ public abstract class Data {
 	/**
 	 * The portal's date format.
 	 */
-	protected static final DateFormat df
+	public static final DateFormat df
 		= new SimpleDateFormat("yyyy-MM-dd");
 
 	/**
@@ -53,10 +53,11 @@ public abstract class Data {
 		return result;
 	}
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Removes illegal SQL characters from the given input string.
 	 */
-	protected String normalizeSql(String input) {
+	/*protected String normalizeSql(String input) {
 		String	result	= new String();
 		int	length	= input.length();
 
@@ -75,5 +76,5 @@ public abstract class Data {
 			}
 		}
 		return result;
-	}
+	}*/
 }

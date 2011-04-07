@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletRequest;
  * @author Niels Joncheere
  */
 public class InterestingWebsite extends RegularData {
-	private String	author;
-	private String	review;
-	private String	summary;
-	private String	title;
-	private URL	url;
+	public String	author;
+	public String	review;
+	public String	summary;
+	public String	title;
+	public URL	url;
 
 	/**
 	 * Creates a new interesting website.
@@ -83,26 +83,28 @@ public class InterestingWebsite extends RegularData {
 			"</InterestingWebsite>";
 	}
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add the
 	 * interesting website to a relational database.
 	 */
-	public String asSql() {
+	/*public String asSql() {
 		return	"INSERT INTO InterestingWebsite (DateAdded, Author, " +
 			"Review, Summary, Title, URL) " + "VALUES (\'" +
 			df.format(dateAdded) + "\', \'" + normalizeSql(author) +
 			"\', \'" + normalizeSql(review) + "\', \'" + 
 			normalizeSql(summary) + "\', \'" + normalizeSql(title) +
 			"\', \'" + normalizeSql(url.toString()) + "\');";
-	}
+	}*/
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add a
 	 * <code>RawData</code> object with an <code>InterestingWebsite</code>
 	 * structure to a relational database.
 	 * @see softarch.portal.data.RawData
 	 */
-	public String asSql(RawData rd) {
+	/*public String asSql(RawData rd) {
 		return	"INSERT INTO RawInterestingWebsite (ID, " +
 			"DateAdded, Author, Review, Summary, Title, URL) " +
 			"VALUES (" + rd.getId() + ", \'" +
@@ -110,16 +112,17 @@ public class InterestingWebsite extends RegularData {
 			"\', \'" + normalizeSql(review) + "\', \'" +
 			normalizeSql(summary) + "\', \'" + normalizeSql(title) +
 			"\', \'" + normalizeSql(url.toString()) + "\');";
-	}
+	}*
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL DELETE string that allows the system to delete a
 	 * <code>RawData</code> object with an <code>InterestingWebsite</code>
 	 * structure from a relational database.
 	 * @see softarch.portal.data.RawData
 	 */
-	public String asSqlDelete(RawData rd) {
+	/*public String asSqlDelete(RawData rd) {
 		return	"DELETE FROM RawInterestingWebsite WHERE ID = " +
 			rd.getId() + ";";
-	}
+	}*/
 }

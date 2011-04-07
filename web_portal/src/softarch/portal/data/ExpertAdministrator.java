@@ -64,11 +64,12 @@ public class ExpertAdministrator extends Administrator {
 			"</ExpertAdministrator>";
 	}
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add
 	 * the account to a relational database.
 	 */
-	public String asSql() {
+	/*public String asSql() {
 		return	"INSERT INTO ExpertAdministrator (Username, " +
 			"Password, FirstName, LastName, EmailAddress, " +
 			"LastLogin) VALUES (\'" + normalizeSql(username) +
@@ -77,13 +78,14 @@ public class ExpertAdministrator extends Administrator {
 			normalizeSql(lastName) + "\', \'" +
 			normalizeSql(emailAddress) + "\', \'" +
 			df.format(lastLogin) + "\');";
-	}
+	}*/
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL UPDATE string that allows the system to update
 	 * the account in a relational database.
 	 */
-	public String asSqlUpdate() {
+	/*public String asSqlUpdate() {
 		return  "UPDATE ExpertAdministrator SET Password = \'" +
 			normalizeSql(password) + "\', FirstName = \'" +
 			normalizeSql(firstName) + "\', LastName = \'" +
@@ -91,5 +93,5 @@ public class ExpertAdministrator extends Administrator {
 			normalizeSql(emailAddress) + "\', LastLogin = \'" +
 			df.format(lastLogin) + "\' " + "WHERE Username = \'" +
 			normalizeSql(username) + "\';";
-	}
+	}*/
 }

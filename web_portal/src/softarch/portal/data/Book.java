@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletRequest;
  * @author Niels Joncheere
  */
 public class Book extends RegularData {
-	private String	author;
-	private long	isbn;
-	private int	pages;
-	private Date	publicationDate;
-	private String	publisher;
-	private String	review;
-	private String	summary;
-	private String	title;
+	public String	author;
+	public long	isbn;
+	public int	pages;
+	public Date	publicationDate;
+	public String	publisher;
+	public String	review;
+	public String	summary;
+	public String	title;
 
 	/**
 	 * Creates a new book.
@@ -103,11 +103,12 @@ public class Book extends RegularData {
 			"</Book>";
 	}
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add the
 	 * book to a relational database.
 	 */
-	public String asSql() {
+	/*public String asSql() {
 		return	"INSERT INTO Book (DateAdded, Author, ISBN, Pages, " +
 			"PublicationDate, Publisher, Review, Summary, Title) " +
 			"VALUES " + "(\'" + df.format(dateAdded) + "\', \'" +
@@ -117,15 +118,16 @@ public class Book extends RegularData {
 			normalizeSql(review) + "\', \'" +
 			normalizeSql(summary) + "\', \'" + normalizeSql(title) +
 			"\');";
-	}
+	}*/
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL INSERT string that allows the system to add a
 	 * <code>RawData</code> object with a <code>Book</code>
 	 * structure to a relational database.
 	 * @see softarch.portal.data.RawData
 	 */
-	public String asSql(RawData rd) {
+	/*public String asSql(RawData rd) {
 		return	"INSERT INTO RawBook (ID, DateAdded, Author, " +
 			"ISBN, Pages, PublicationDate, Publisher, Review, " +
 			"Summary, Title) VALUES (" + rd.getId() + ", \'" +
@@ -136,15 +138,16 @@ public class Book extends RegularData {
 			normalizeSql(review) + "\', \'" +
 			normalizeSql(summary) + "\', \'" +
 			normalizeSql(title) + "\');";
-	}
+	}*/
 
+	// MODIFIED by Wouter & Ken
 	/**
 	 * Returns an SQL DELETE string that allows the system to delete a
 	 * <code>RawData</code> object with an <code>Book</code>
 	 * structure from a relational database.
 	 * @see softarch.portal.data.RawData
 	 */
-	public String asSqlDelete(RawData rd) {
+	/*public String asSqlDelete(RawData rd) {
 		return "DELETE FROM RawBook WHERE ID = " + rd.getId() + ";";
-	}
+	}*/
 }
