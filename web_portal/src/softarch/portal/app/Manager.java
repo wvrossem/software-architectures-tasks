@@ -8,4 +8,6 @@ import softarch.portal.db.DatabaseFacade;
  */
 public abstract class Manager {
 	protected DatabaseFacade dbFacade;
+	// Assignment 4 Modification.
+	protected DatabaseFacade dbFacade2;
 }

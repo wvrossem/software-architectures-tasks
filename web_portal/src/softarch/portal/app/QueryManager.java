@@ -7,6 +7,9 @@ import softarch.portal.db.sql.SQLDatabaseFacade;
 
 import java.util.List;
 import java.util.Date;
+import java.util.Vector;
+
+import librarysearch.soft.Book;
 
 /**
  * Handles all queries concerning the regular database.
@@ -18,8 +21,10 @@ public class QueryManager extends Manager {
 	 * @param dbFacade	The database facade the manager should use to
 	 * 			access the database.
 	 */
-	public QueryManager(DatabaseFacade dbFacade) {
+	public QueryManager(DatabaseFacade dbFacade, DatabaseFacade dbFacade2) {
 		this.dbFacade = dbFacade;
+		// Assignment 4 Modification.
+		this.dbFacade2 = dbFacade2;
 	}
 
 	/**
@@ -35,7 +40,11 @@ public class QueryManager extends Manager {
 		throws ApplicationException {
 
 		try {
-			return dbFacade.findRecords(informationType, queryString);
+			// Assignment 4 Modification.
+			List<Book> ret = new Vector<Book>();
+			ret.addAll(dbFacade.findRecords(informationType, queryString));
+			ret.addAll(dbFacade2.findRecords(informationType, queryString));
+			return ret;
 		}
 		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());
@@ -55,7 +64,11 @@ public class QueryManager extends Manager {
 		throws ApplicationException {
 
 		try {
-			return dbFacade.findRecordsFrom(informationType, date);
+			// Assignment 4 Modification.
+			List<Book> ret = new Vector<Book>();
+			ret.addAll(dbFacade.findRecordsFrom(informationType, date));
+			ret.addAll(dbFacade2.findRecordsFrom(informationType, date));
+			return ret;
 		}
 		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());

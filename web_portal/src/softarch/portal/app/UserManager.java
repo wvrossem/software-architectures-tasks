@@ -49,9 +49,11 @@ public class UserManager extends Manager {
 	 * @param dbFacade	The database facade the manager should
 	 * 			use to access the portal's database.
 	 */
-	public UserManager(DatabaseFacade dbFacade) {
+	public UserManager(DatabaseFacade dbFacade, DatabaseFacade dbFacade2) {
 		// Initialize the superclass' members:
 		this.dbFacade	= dbFacade;
+		// Assignment 4 Modification.
+		this.dbFacade2 = dbFacade2;
 		// Initialize the class' members:
 		this.users	= new Hashtable();
 		this.sessionId	= new Integer(0);

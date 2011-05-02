@@ -29,7 +29,8 @@ public class Database {
 		csvController = new CsvController();
 	}
 	
-	public void insert(CsvValues csvValues) throws FlatFileDatabaseException {
+	// Assignment 4 Modification.
+	/*public void insert(CsvValues csvValues) throws FlatFileDatabaseException {
 		throw new FlatFileDatabaseException("Not implemented");
 	}
 	
@@ -43,5 +44,5 @@ public class Database {
 	
 	public boolean exists(Object el) throws FlatFileDatabaseException {
 		throw new FlatFileDatabaseException("Not implemented");
-	}
+	}*/
 }

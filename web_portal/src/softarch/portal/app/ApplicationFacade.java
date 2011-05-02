@@ -6,6 +6,7 @@ import softarch.portal.data.UserProfile;
 import softarch.portal.db.DatabaseFacade;
 import softarch.portal.db.flatfile.FlatFileDatabaseFacade;
 import softarch.portal.db.sql.SQLDatabaseFacade;
+import softarch.portal.db.webservice.WebServiceDatabaseFacade;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,6 +35,8 @@ public class ApplicationFacade {
 					String dbUrl,
 					String dbType) throws ApplicationException {
 		DatabaseFacade dbFacade;
+		// Assignment 4 Modification.
+		DatabaseFacade dbFacade2;
 		
 		// MODIFIED by Wouter & Ken
 		if ( dbType.equals("SQL") ) {
@@ -43,11 +46,14 @@ public class ApplicationFacade {
 		} else {
 			throw new ApplicationException("Unclear what DB to use: ... a SQL or CSV Db?");
 		}
+		// Assignment 4 Modification.
+		dbFacade2 = new WebServiceDatabaseFacade();
 		
-		userManager		= new UserManager(dbFacade);
-		queryManager		= new QueryManager(dbFacade);
-		administrationManager	= new AdministrationManager(dbFacade);
-		operationManager	= new OperationManager(dbFacade);
+		userManager		= new UserManager(dbFacade, dbFacade2);
+		// Assignment 4 Modification.
+		queryManager		= new QueryManager(dbFacade, dbFacade2);
+		administrationManager	= new AdministrationManager(dbFacade, dbFacade2);
+		operationManager	= new OperationManager(dbFacade, dbFacade2);
 	}
 
 
