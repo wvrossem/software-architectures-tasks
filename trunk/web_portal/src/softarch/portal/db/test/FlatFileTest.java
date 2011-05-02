@@ -24,7 +24,8 @@ public class FlatFileTest {
 			System.out.println(profile.getLastName());
 			System.out.println(profile.getLastLogin());
 			
-			System.out.println(db.exists("wvrossem"));
+			// Assignment 4 Modification.
+			/*System.out.println(db.exists("wvrossem"));*/
 			
 			user = new ExpensiveSubscription(
 					"wvrossem", "wvrossem", "Wouter", "Van Rossem", "Wouter.Van.Rossem@vub.ac.be", new Date());

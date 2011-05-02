@@ -17,8 +17,10 @@ public class OperationManager extends Manager {
 	 * @param dbFacade	The database facade the manager should use to
 	 * 			access the portal's database(s).
 	 */
-	public OperationManager(DatabaseFacade dbFacade) {
+	public OperationManager(DatabaseFacade dbFacade, DatabaseFacade dbFacade2) {
 		this.dbFacade = dbFacade;
+		// Assignment 4 Modification.
+		this.dbFacade2 = dbFacade2;
 	}
 
 	/**
@@ -29,7 +31,8 @@ public class OperationManager extends Manager {
 		throws ApplicationException {
 
 		try {
-			return dbFacade.getNumberOfRegularRecords(informationType);
+			// Assignment 4 Modification.
+			return dbFacade.getNumberOfRegularRecords(informationType) + dbFacade2.getNumberOfRegularRecords(informationType);
 		}
 		catch (DatabaseException e) { // MODIFIED by Wouter & Ken
 			throw new ApplicationException(e.getMessage());

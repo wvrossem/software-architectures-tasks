@@ -20,8 +20,10 @@ public class AdministrationManager extends Manager {
 	 * @param dbFacade	The database facade the manager should use
 	 * 			to access the database.
 	 */
-	public AdministrationManager(DatabaseFacade dbFacade) {
+	public AdministrationManager(DatabaseFacade dbFacade, DatabaseFacade dbFacade2) {
 		this.dbFacade = dbFacade;
+		// Assignment 4 Modification.
+		this.dbFacade2 = dbFacade2;
 	}
 
 	/**
