@@ -1,0 +1,1 @@
+Repository for the tasks of the Software Architectures course given at the Vrije Universiteit Brussel.
